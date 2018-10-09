@@ -27,6 +27,7 @@ The application will utilize three layers:
    Amazon API Gateway.
 3. A data layer storing customer tickets in DynamoDB.
 
+//TODO: we need to fix this diagram
 ![Architecture diagram](images/architecture.png)
 
 For the purposes of this workshop, our failover is focused on the path from
@@ -110,39 +111,6 @@ website URL you will set up in Module 2.
 ### AWS Command Line Interface
 
 To complete parts of this workshop you'll need the AWS Command Line Interface
-(CLI) installed on your local machine. Make sure you have the latest version
-installed.
+(CLI). The front end application is written in AngularJS and requires node and npm. To avoid spending time on configuring your laptop, we will use AWS Cloud9 as our IDE. https://aws.amazon.com/cloud9/. 
 
-If you are using the supplied EC2 AMI, this will already be done for you and
-there is no need to do anything else.  The rest of this section is only needed
-if you choose to use your own computer for the workshop modules.
-
-Follow the [AWS CLI Getting Started
-guide](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) to
-install and configure the CLI on your machine.
-
-Please also configure an IAM user on the AWS account you intend to use with
-Programatic Access and run **aws configure** and supply the need Access Key
-and Secret Access Key.  We recommend that this user have Administrator Access
-to the account for the duration of the workshop.
-
-### A local environment with Git, Node.js and NPM
-
-Again, if you use the supplied EC2 AMI, you don't need to set any of this up - it
-has been done for you.
-
-[README_InstallDevDependencies](README_InstallDevDependencies.md).  Using the
-AMI is strongly suggested, but if you are an advanced user you may manually set
-these up on your workstation - see README_InstallDevDependencies for more info.
-
-### Browser
-
-We recommend you use the latest version of Chrome or Firefox when testing the
-web application UI.
-
-### Text Editor
-
-You will need a local text editor for making minor updates to configuration
-files.  Good options are Atom, Sublime, VI/VIM, TextEdit or NotePad
-
-We have already installed vi/vim on the provided EC2 AMI.
+Follow the instruction [here to launch a AWS Cloud9 IDE](README_Cloud9.md) before we start the lab. Once you have AWS Cloud9 and `nodejs` installed, you can start the lab.

@@ -1,17 +1,6 @@
 ## About
 
-## Update (enghwa)
-to change this with a Cloud9 instance in eu-west-1
-and run:
-``
-nvm install 8.9.1
-``
-verify as 
-
-
-Confirm installation by typing the following:
-- `npm -v` should output '5.5.1'
-- `node -v` should output 'v8.9.1'
+not using this!
 
 
 

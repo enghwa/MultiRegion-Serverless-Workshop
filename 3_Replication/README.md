@@ -36,8 +36,10 @@ During module 1, you actually already deployed a Lambda function that we can
 use to push the data. All we need to do now is hook this up to DynamoDB
 Streams.
 
-In your *source* region (double check this) DynamoDB, select the SXRTickets table
+In your *source* region (double check this) DynamoDB, select the SXRTickets table ....
+// time to add in DDB GlobalTable replication to SIN
 
+<!--
 ![Select SXRTickets DynamoDB Source Region](images/select-ddb-source-table.png)
 
 Then, select *Triggers* from the tabs at the top of the screenshot
@@ -68,6 +70,9 @@ for the ticket you just created:
 Note that sometimes you need to create two tickets in order for the
 *TicketReplicateFunction* to fully initialize, so if you don't see anything in the
 Singapore DynamoDB table, try creating a second ticket and then check again.
+-->
+//test out replication work..add a few ticket.
+
 
 ## 3. Configure Route53 failover
 
@@ -76,9 +81,9 @@ customer. Route53 provides an easy way to do this using DNS and healthchecks.
 Be aware that some steps in this module will take time to go into effect
 because of the nature of DNS. Be patient when making changes.
 
-NOTE: You will need the latest AWS CLI for this. Ensure you have updated
+<!--NOTE: You will need the latest AWS CLI for this. Ensure you have updated
 recently. See http://docs.aws.amazon.com/cli/latest/userguide/installing.html
-
+-->
 
 ### 3.1 Purchase (or repurpose) your own domain
 
@@ -139,7 +144,7 @@ directions if you choose/need to go this route to get the certificate approved.
 
 Make sure to follow this same process for your second region.
 
-1. Ensure you are in your primary region
+1. Ensure you are in your primary region, eu-west1.
 2. Navigate to the **Certificate Manager** service page
 3. Select **Request a certificate**
 4. In this next step you will configure the domain name you just registered
@@ -156,7 +161,7 @@ Make sure to follow this same process for your second region.
    the screen if you choose/need to validate this way)
 7. Once you have confirmed your certificate, it will appear as `Issued` in
    your list of certificates.
-8. Repeat steps 2-7 again in your second region
+8. Repeat steps 2-7 again in your second region, ap-southeast-1.
 
 ### 3.3 Configure custom domains on each API, in each region
 
@@ -249,7 +254,7 @@ handling traffic under normal conditions.
 #### High-level instructions
 
 Navigate over to the **Route53** service and choose **Health checks**. Create
-a new health check, give it an easily identifyable name e.g. `ireland-api`.
+a new health check, give it an easily identifiable name e.g. `ireland-api`.
 Under *Monitor an endpoint*, specify the endpoint by domain name.
 
 Since our API is protected by a TLS certificate you will need to change the
@@ -325,8 +330,9 @@ testing the UI in the second module.
 **IMPORTANT** This new API Endpoint URL does NOT have `/prod/` at the end.
 
 Ensure you run `npm run build` from the *2_UI* directory, and then upload the */dist*
-contents to the S3 bucket using the same *aws s3* command you used in the second
-module.
+contents to the S3 bucket using the same *aws s3* command you used in the second module. ie:
+
+    aws s3 sync --acl public-read --delete dist/ s3://[bucket_name]
 
 ## Completion
 
