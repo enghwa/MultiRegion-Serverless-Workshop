@@ -111,6 +111,6 @@ website URL you will set up in Module 2.
 ### AWS Command Line Interface
 
 To complete parts of this workshop you'll need the AWS Command Line Interface
-(CLI). The front end application is written in AngularJS and requires node and npm. To avoid spending time on configuring your laptop, we will use AWS Cloud9 as our IDE. https://aws.amazon.com/cloud9/. 
+(CLI). The front end application is written in AngularJS and requires node and npm. To avoid spending time on configuring your laptop, we will use [AWS Cloud9](https://aws.amazon.com/cloud9/) as our IDE. It has AWS CLI preconfigured.
 
 Follow the instruction [here to launch a AWS Cloud9 IDE](README_Cloud9.md) before we start the lab. Once you have AWS Cloud9 and `nodejs` installed, you can start the lab.

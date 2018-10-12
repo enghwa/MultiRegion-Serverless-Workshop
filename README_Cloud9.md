@@ -27,7 +27,7 @@ Once AWS Cloud9 is up and running, execute these 2 commands in the command shell
 ```bash
 nvm install 8.9.1
 
-nvm use v8.9.1
+nvm alias default v8.9.1
 
 ```
 
@@ -36,8 +36,23 @@ verify that you have the right `node` and `npm` :
 ```bash
 enghwa:~/environment $ npm -v
 5.5.1
+
 enghwa:~/environment $ node -v
 v8.9.1
+
+enghwa:~/environment $ nvm ls
+        v6.14.4  
+->       v8.9.1  
+         system  
+default -> v8.9.1
+node -> stable (-> v8.9.1) (default)
+stable -> 8.9 (-> v8.9.1) (default)
+iojs -> N/A (default)
+lts/* -> lts/argon (-> N/A)
+lts/argon -> v4.9.1 (-> N/A)
+lts/boron -> v6.14.4
+lts/carbon -> v8.12.0 (-> N/A)
+
 ```
 [Go back](README.md) or
 Start the lab: [Build an API layer](1_API/README.md)
