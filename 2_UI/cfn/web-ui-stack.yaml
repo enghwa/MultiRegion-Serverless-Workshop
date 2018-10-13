@@ -68,6 +68,6 @@ Outputs:
     Value: !Ref WebsiteBucket
     Description: The name of the website bucket
 
-  BucketURL:
-    Value: !GetAtt WebsiteBucket.WebsiteURL
-    Description: URL for the static website
+  # BucketURL:
+  #   Value: !GetAtt WebsiteBucket.WebsiteURL
+  #   Description: URL for the static website
