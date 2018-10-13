@@ -42,6 +42,8 @@ Take note of the values for each of these, you will need them in the next steps.
 
 </details>
 
+![bucket-name](images/s3bucket-name.png)
+
 Next, we need to create a Cloudfront distribution for our S3 bucket:
 
     aws cloudformation deploy \
@@ -52,7 +54,6 @@ Next, we need to create a Cloudfront distribution for our S3 bucket:
 
 Note that you must replace `[bucket-name]` in this command with the bucket
 name output from the CloudFormation stack in step 1. . It typically takes about 15 minutes for the CloudFormation stack creation to finish. 
-
 
 ## 2. Configure Federated Identities with Cognito
 
@@ -65,32 +66,25 @@ Go into your Facebook Developer account and create an new application by
 
 Click on **Add a New App** in the upper right corner
 
-![Add new FB app](images/facebook-add-app.png)
+![Add new FB app](images/facebook-add-app2.png)
 
 Name your App anything you would like, and then click **Create App ID**
 
-Once you have created your App, you will need to select *Settings* from the left menu
+Once you have created your App, you will need to select *Settings* -> *Basic* from the left menu
 
 ![FB Select Settings](images/facebook-select-settings.png)
 
 Next choose **Add Platform** from the bottom of the Settings screenshot
 
-![FB Select Add Platform](images/facebook-add-platform.png)
+![FB Select Add Platform](images/facebook-add-platform2.png)
 
-Choose **Website** from the list of choices that comes up
+Choose **Website** from the list of choices that comes up:
 
 ![FB Select Website](images/facebook-select-website.png)
 
-Then enter the S3 website URL (this is one of the CloudFormation outputs from the
-template you deployed in earlier steps in this module) into the *Site URL* dialog
-and then select **Save Changes** from the lower right
-
-![FB enter URL and save](images/facebook-website-url.png)
-
-Finally, again on the left side menu, choose **App Review** and make your Facebook
-application public and select a category (Education might be a good choice)
-
-![FB Make Public](images/facebook-make-public.png)
+Then enter the Cloudfront URL (this is the CloudFormation output - `CfDistributionDomainNameWithOAI` from the `ticket-service-ui-cloudfront` template you deployed in earlier steps in this module) into the *Site URL* dialog
+and then select **Save Changes** from the lower right.
+![FB enter URL and save](images/facebook-website-url2.png)
 
 Once you are done with this, make note of the Facebook App ID - you will need this
 in the next step as well as when you build the website code in the next section.
@@ -156,8 +150,12 @@ do this with:
 Note that you must replace `[bucket-name]` in this command with the bucket
 name output from the CloudFormation stack in step 1.
 
-To confirm everything went as expected, navigate to your bucket URL (this is
-also one of the CloudFormation outputs from Module 2_UI). You should see our
+#### Update Facebook App setting
+Navigate back to Facebook App setting, update "App Domains" and "Privacy Policy URL" with the Cloudfront URL. Select a category (Education might be a good choice). Toggle on the "Off" button at the top right corner to make the App public.
+
+![FB Make Public](images/facebook-make-public2.png)
+
+To confirm everything went as expected, navigate to your Cloudfront URL. You should see our
 simple ticketing application. Go ahead and login using your Facebook account
 and then submit a couple of tickets to check that everything is working.
 
