@@ -8,7 +8,7 @@ in the first module.
 
 Navigate to the `2_UI/cfn` folder in your local Git repository.
 
-## 1. Create the AWS Cognito Identity Pool and S3 hosting bucket
+## 1. Create the AWS Cognito Identity Pool, S3 bucket and Cloudfront distribution
 
 Our first task is to setup AWS Cognito to allow our UI application to
 authenticate users and gain access credentials to allow our UI to call the
@@ -41,6 +41,18 @@ the Outputs tab. This time you will see three keys:
 Take note of the values for each of these, you will need them in the next steps.
 
 </details>
+
+Next, we need to create a Cloudfront distribution for our S3 bucket:
+
+    aws cloudformation deploy \
+    --region eu-west-1 \
+    --template-file webs3bucket_with_cloudfront.yaml \
+    --stack-name ticket-service-ui-cloudfront \
+    --parameter-overrides S3BucketName=[bucket-name]
+
+Note that you must replace `[bucket-name]` in this command with the bucket
+name output from the CloudFormation stack in step 1. . It typically takes about 15 minutes for the CloudFormation stack creation to finish. 
+
 
 ## 2. Configure Federated Identities with Cognito
 
@@ -139,7 +151,7 @@ custom settings.
 Next, you'll need to upload the UI to the S3 website bucket specified in step 1. You can
 do this with:
 
-    aws s3 sync --acl public-read --delete dist/ s3://[bucket_name]
+    aws s3 sync --delete dist/ s3://[bucket_name]
 
 Note that you must replace `[bucket-name]` in this command with the bucket
 name output from the CloudFormation stack in step 1.

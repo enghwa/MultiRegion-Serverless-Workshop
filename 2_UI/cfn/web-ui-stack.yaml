@@ -46,13 +46,14 @@ Resources:
       Roles:
         authenticated: !GetAtt SXRAuthenticatedRole.Arn
 
+# We will use Cloudfront with OAI, so no need public S3 bucket
   WebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      AccessControl: PublicRead
-      WebsiteConfiguration:
-          IndexDocument: index.html
-          ErrorDocument: error.html
+      # AccessControl: PublicRead
+      # WebsiteConfiguration:
+      #     IndexDocument: index.html
+      #     ErrorDocument: error.html
 
 
 Outputs:
