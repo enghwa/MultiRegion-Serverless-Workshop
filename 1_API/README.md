@@ -354,7 +354,16 @@ You can do this using the following CLI command. Note that you must replace
 
 **IMPORTANT** DO NOT deploy any resources to Singapore during your initial pass
 on Module 1. You will come back in Module 3 and then deploy the same components
-to Singapore. 
+to Singapore. We are providing the commands for both regions here for your
+convenience.
+
+*Singapore* (do not deploy during your first pass on Module 1_API)
+
+    aws cloudformation package \
+    --region ap-southeast-1 \
+    --template-file wild-rydes-api.yaml \
+    --output-template-file wild-rydes-api-output.yaml \
+    --s3-bucket [bucket_name_you_created_above]
 
 If all went well, you should get a success message and instructions to deploy your new template.
 
@@ -377,7 +386,16 @@ Go ahead and run the following CLI command:
 
 **IMPORTANT** DO NOT deploy any resources to Singapore during your initial pass
 on Module 1. You will come back in Module 3 and then deploy the same components
-to Singapore. 
+to Singapore. We are providing the commands for both regions here for your
+convenience.
+
+*Singapore* (do not deploy during your first pass on Module 1_API)
+
+    aws cloudformation deploy \
+    --region ap-southeast-1 \
+    --template-file wild-rydes-api-output.yaml \
+    --stack-name wild-rydes-api \
+    --capabilities CAPABILITY_IAM
 
 This command may take a few minutes to run. In this time you can hop over to the console
 and watch all of the resources being created for you Open up the AWS Console in your browser

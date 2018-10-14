@@ -63,22 +63,6 @@ domain name, ensure there is no CloudFront distribution already setup for the do
 contacts are configured and up-to-date on the domain's SOA/registration records
 since you may need to receive an approval e-mail in the next step.-->
 
-To purchase your own domain
-
-1. Click **Register Domain**
-2. Type your own domain name and choose a domain name (ex. firstname-lastname.co.uk)
-3. Click **Check** to find out whether the domain name is available
-4. If the domain is available, choose **Add to cart**. The domain name appears in your shopping cart 
-5. In the shopping cart, choose the number of years that you want to register the domain for
-6. Choose **Continue** 
-7. On the **Contact Details for Your Domains** page, enter contact information for the domain registrant, administrator, and technical contacts. The values that you enter here are applied to all of the domains that you're registering. 
-8. Choose **Continue**. Select the check box to confirm that you've read the terms of service, and choose **Complete Purchase**
-
-It will take around 
-
-For the remainder of this workshop we will use `example.com` as to
-demonstrate. Please substitute your own domain into any commands or configurations.
-
 #### High-level instructions
 
 Navigate over to the Route53 Console and under **Registered domains** select
@@ -103,6 +87,11 @@ purchase.
    address you specified. Make sure you receive this email and complete the
    verification before proceeding.
 7. Click **Complete Purchase**
+
+It will take around 10 mins to register your domain, and you can keep going the next steps.
+
+For the remainder of this workshop we will use `example.com` as to
+demonstrate. Please substitute your own domain into any commands or configurations.
 
 ### 3.2 Configure a certificate in Certificate Manager in each region
 
