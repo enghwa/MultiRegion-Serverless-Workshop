@@ -138,7 +138,7 @@ That's all that is required for now to set up the table.
 
 ## 3. Create Four Lambda functions
 
-Next, you will create four Lambda functions. First, navigate to **Lambda** in
+Next, you will create three Lambda functions. First, navigate to **Lambda** in
 the console (again ensuring you are still in the correct region) and click
 **Create a function**
 
@@ -168,20 +168,17 @@ your function will not work - case matters*
 
 Once everything is set correctly, click **Save** near the top center of the screen.
 
-We still need to create three more lambda functions.  All of them use `Node.js 6.10`
+We still need to create two more lambda functions.  All of them use `Node.js 6.10`
 as the runtime.  Repeat the same steps you used above.  The table below provides the
-information needed for all four functions.  Note that you have already done the first one.
+information needed for all three functions.  Note that you have already done the first one.
 
 | Function Name          | Handler Name          | Execution Role                  | Env Var Key   | Env Var Value  |
 | ---------------------  | --------------------- | ------------------------------- | ------------- | -------------- |
 | [TicketGetFunction](tickets-get.js)  | tickets-get.handler   | TicketGetRole           | TABLE_NAME    | SXRTickets     |
 | [TicketPostFunction](tickets-post.js)  | tickets-post.handler   | TicketPostRole           | TABLE_NAME    | SXRTickets     |
-| [TicketReplicateFunction](tickets-replicate.js)         | tickets-replicate.handler          | TicketReplicateRole | TABLE_NAME    | SXRTickets     |
-| TicketReplicateFunction |                       |                                 | TARGET_REGION | ap-southeast-1 |
 | [SXRHealthCheckFunction](health-check.js) | health-check.handler  | TicketGetRole           | TABLE_NAME    | SXRTickets     |
 
-Note that `TicketReplicateFunction` has two variables - make sure you enter both.
-Also note that proper capitalization matters with `Environment Variables`.  Improper
+Note that proper capitalization matters with `Environment Variables`.  Improper
 case will cause issues later in the workshop.
 
 ## 4. Create API Gateway Endpoint
