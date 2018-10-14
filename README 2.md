@@ -22,6 +22,9 @@ The following objects will be used as you create the resources in the console fo
   from DynamoDB using the `tickets-get.js` and `health-check.js` Lambda functions
 * `wild-rydes-dynamodb-post.json` - This is the policy needed in order to write
   to DynamoDB using the `tickets-post.js` Lambda function
+* `wild-rydes-dynamodb-replication.json` - This is the policy needed in order
+  to use DynambDB Streams to replicate to a second region using the `tickets-replicate.js`
+  Lambda function
 * `tickets-replicate.js` Lambda function to replicate new DynamoDB records to our
   failover region
 * `health-check.js` - Lambda function for checking the status of our application health
@@ -99,7 +102,7 @@ Repeat the same steps two more times, this time creating the role for
 `TicketPostRole` and `TicketReplicateRole` and attaching
 the corresponding policy you created earlier.
 
-## 2. Create the DynamoDB Global Table
+## 2. Create the DynamoDB Table
 
 Next we will create the DynamoDB Table for our application data. Ensure you
 are set to the region you are currently deploying -  Ireland (eu-west-1) or
@@ -115,29 +118,9 @@ this is your first DynamoDB table in this region or not.
 
 For the table name, enter `SXRTickets` and enter `id` as the Primary Key
 Partition Key and keep *String* as the type, then click **Create**.
-This table will serve as the first replica table in a new global table, 
-and will be the prototype for other replica tables that you add later. 
+That’s all that is required for now to set up the table.
 
 ![DymamoDB Create SXRTickets](images/dynamodb-create-sxrtickets.png)
-
-Choose the **Global Tables** tab, and then choose Enable streams. Leave 
-the View type at its default value (New and old images). 
-
-![DymamoDB Global Table Create](images/dynamodb-create-globaltable.png)
-
-Choose **Add region**, and then choose another region where you want to 
-deploy another replica table. In this case, choose **Asia Pacific (Singapore)**, 
-and then choose **Continue**. This will start the table creation process in
-Singapore region.
-
-![DymamoDB Global Table Add Region](images/dynamodb-create-gtregion2.png)
-
-The **Global Table** tab for the selected table will show that the table is
-replicated in multiple regions.
-
-![DymamoDB Global Table Tab](images/dynamodb-create-globaltable2.png)
-
-That's all that is required for now to set up the table.
 
 ## 3. Create Four Lambda functions
 
