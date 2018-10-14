@@ -72,7 +72,7 @@ Name your App anything you would like, and then click **Create App ID**
 
 Once you have created your App, you will need to select *Settings* -> *Basic* from the left menu: 
 
-![FB Select Settings](images/facebook-select-settings.png)
+<!-- ![FB Select Settings](images/facebook-select-settings.png) -->
 
 Next choose **Add Platform** from the bottom of the Settings screenshot:
 
@@ -173,7 +173,7 @@ Facebook Developer account configuration. Note that if you change any
 of the settings you will need to run *npm run build* again and then upload the website
 code to your S3 bucket again.
 
-![App Screenshot](images/app-screenshot.png)
+![App Screenshot](images/app-screenshot2.png)
 
 ## Completion
 
