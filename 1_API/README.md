@@ -64,14 +64,12 @@ Name your policy `TicketGetPolicy` and click **Create policy**
 
 ![Create Policy Editor](images/create-policy-2.png)
 
-Now repeat these exact same steps two more times in order to create the
-following two additional polices that will be needed during the workshop.
+Now repeat these exact same steps in order to create the 
+following additional policy that will be needed during the workshop.
 
 **Download policy**: [TicketPostPolicy](wild-rydes-dynamodb-post.json)
 
-**Download policy**: [TicketReplicatePolicy](wild-rydes-dynamodb-replication.json)
-
-Next you will create the three roles that correspond to the three polices that
+Next you will create the two roles that correspond to the two polices that
 were just created. Each of these roles will be used by a different Lambda
 function thereby limiting the permissions of each function. This follows an
 AWS Best Practice of granting [least privilege](http://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
@@ -95,8 +93,7 @@ On the next screen, enter `TicketGetRole` for the Role Name and select **Create 
 
 ![Choose Role Final](images/create-role-final.png)
 
-Repeat the same steps two more times, this time creating the role for
-`TicketPostRole` and `TicketReplicateRole` and attaching
+Repeat the same steps for creating the role of `TicketPostRole` and attaching
 the corresponding policy you created earlier.
 
 ## 2. Create the DynamoDB Global Table
@@ -120,7 +117,7 @@ and will be the prototype for other replica tables that you add later.
 
 ![DymamoDB Create SXRTickets](images/dynamodb-create-sxrtickets.png)
 
-Choose the **Global Tables** tab, and then choose Enable streams. Leave 
+Choose the **Global Tables** tab, and then choose **Enable streams**. Leave 
 the View type at its default value (New and old images). 
 
 ![DymamoDB Global Table Create](images/dynamodb-create-globaltable.png)
