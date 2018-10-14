@@ -27,8 +27,7 @@ The application will utilize three layers:
    Amazon API Gateway.
 3. A data layer storing customer tickets in DynamoDB.
 
-//TODO: we need to fix this diagram
-![Architecture diagram](images/architecture.png)
+![Architecture diagram](images/architecture-1.png)
 
 For the purposes of this workshop, our failover is focused on the path from
 our application (in this case, a web application) through API Gateway,
