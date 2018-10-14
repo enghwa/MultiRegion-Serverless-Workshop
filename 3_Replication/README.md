@@ -4,53 +4,18 @@ Now that we have the app set up, lets replicate this in a second region so we
 have something to failover to. For this workshop, we will focus on the API
 layer down, leaving the UI in a single region.
 
-## 1. Replicate the primary API stack
-
-For the first part of this module, all of the steps will be the same as module
-1_API but performed in our secondary region (AP Singapore) instead. Please follow
-module 1_API again then come back here. We suggest using the CloudFormation templates
-from that module to make this much quicker the second time.
-
-**IMPORTANT** Ensure you deploy only to *Singapore* the second time you go through
-Module 1_API
-
-* [Build an API layer](../1_API/README.md)
-
-Once you are done, verify that you get a second API URL for your application from
-the *outputs* of the CloudFormation template you deployed.
-
-## 2. Replicating the data
-
-So now that you have a separate stack, let's take a look at continuously
-replicating the data in DynamoDB from the primary region (Ireland) to the
-secondary region (Singapore) so that there is always a backup.
-
-We will be using a feature of DynamoDB Global Tables for this. Any changes 
-made to any item in any replica table will be replicated to all of the other 
-replicas within the same global table. In a global table, a newly-written item is 
-usually propagated to all replica tables within seconds.
-
-However, conflicts can arise if applications update the same item in different 
-regions at about the same time. To ensure eventual consistency, DynamoDB global tables 
-use a “last writer wins” reconciliation between concurrent updates, where DynamoDB makes 
-a best effort to determine the last writer. 
-
-You can test to see if it is working by creating a new ticket in the UI you deployed 
-in the second module.  Then, look at the SXRTickets table in *source* region (double check this) DynamoDB and the DynamoDB table in your *secondary* region, and see if you can see the record
-for the ticket you just created.
-
-## 3. Configure Route53 failover
+## 1. Configure Route53 failover
 
 We need a way to be able to failover quickly with minimal impact to the
 customer. Route53 provides an easy way to do this using DNS and healthchecks.
 Be aware that some steps in this module will take time to go into effect
-because of the nature of DNS. Be patient when making changes.
+because of the nature of DNS. 
 
 <!--NOTE: You will need the latest AWS CLI for this. Ensure you have updated
 recently. See http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 -->
 
-### 3.1 Purchase (or repurpose) your own domain
+### 1.1 Purchase (or repurpose) your own domain
 
 In this step, you will provision your own domain name to use for this
 application. If you already have a domain name registered with Route53 and
@@ -88,12 +53,51 @@ purchase.
    verification before proceeding.
 7. Click **Complete Purchase**
 
-It will take around 10 mins to register your domain, and you can keep going the next steps.
+It will take around 10 mins to register your domain, and you can keep going the next steps
+(2. replicate API stack and 3. replicate data) first. You will configure a certificate in
+AWS Certificate Manager and a health check in Route53 later. 
 
 For the remainder of this workshop we will use `example.com` as to
 demonstrate. Please substitute your own domain into any commands or configurations.
 
-### 3.2 Configure a certificate in Certificate Manager in each region
+## 2. Replicate the primary API stack
+
+For the first part of this module, all of the steps will be the same as module
+1_API but performed in our secondary region (AP Singapore) instead. Please follow
+module 1_API again then come back here. We suggest using the CloudFormation templates
+from that module to make this much quicker the second time.
+
+**IMPORTANT** Ensure you deploy only to *Singapore* the second time you go through
+Module 1_API
+
+* [Build an API layer](../1_API/README.md)
+
+Once you are done, verify that you get a second API URL for your application from
+the *outputs* of the CloudFormation template you deployed.
+
+## 3. Replicating the data
+
+So now that you have a separate stack, let's take a look at continuously
+replicating the data in DynamoDB from the primary region (Ireland) to the
+secondary region (Singapore) so that there is always a backup.
+
+We will be using a feature of DynamoDB Global Tables for this. Any changes 
+made to any item in any replica table will be replicated to all of the other 
+replicas within the same global table. In a global table, a newly-written item is 
+usually propagated to all replica tables within seconds.
+
+However, conflicts can arise if applications update the same item in different 
+regions at about the same time. To ensure eventual consistency, DynamoDB global tables 
+use a “last writer wins” reconciliation between concurrent updates, where DynamoDB makes 
+a best effort to determine the last writer. 
+
+You can test to see if it is working by creating a new ticket in the UI you deployed 
+in the second module.  Then, look at the SXRTickets table in *source* region (double check this) DynamoDB and the DynamoDB table in your *secondary* region, and see if you can see the record
+for the ticket you just created.
+
+## 4. Configure Route53 failover (Continue)
+
+### 4.1 Configure a certificate in Certificate Manager in each region
 
 We will need an SSL certificate in order to configure our domain name with API
 Gateway. AWS makes this simple with AWS Certificate Manager.
@@ -103,31 +107,32 @@ Gateway. AWS makes this simple with AWS Certificate Manager.
 Navigate over to the *Certificate Manager* service and request a new
 certificate for your domain. You will specify the domain name you just created
 (or repurposed). Make sure to request a wildcard certificate which includes
-both `example.com` and `*.example.com`. You will have to approve the request
-via email and see it as `Issued` in the console before proceeding.  You may also
-approve the certificate request by creating a special DNS record  - follow those
-directions if you choose/need to go this route to get the certificate approved.
-
-Make sure to follow this same process for your second region.
+both `example.com` and `*.example.com`. You will have to approve the certificate request
+by creating a special DNS record  - follow those directions if you choose to purschase your 
+own domain via Route 53.
 
 1. Ensure you are in your primary region, eu-west1.
 2. Navigate to the **Certificate Manager** service page
-3. Select **Request a certificate**
+3. Click **Request a certificate** and select **Request a public certificat**
 4. In this next step you will configure the domain name you just registered
    (or repurposed). You will want to add two domains to make sure you can
    access your site using subdomains. Add both `example.com` and
    `*.example.com`. The `*` acts as a wildcard allowing any subdomain to be
-   covered by this certificate.
-5. Select **Review and request**. Confirm both domains are configured and
+   covered by this certificate
+5. Select ** DNS validation ** and click **Review**. Confirm both domains are configured and
    select **Confirm and request**
-6. A validation email will be sent to the email address configured for the
+6. In the Validation screen, write down the **CNAME** and **Value**. It should be added at 
+**Record Set** in **Route 53**
+7. Go to **Route 53** service page, and select the Domain Name that you created in **Hosted zones**.
+8. Confirm your Domain Name and click **Create Record Set**. Type the name (ex.d9adda5310e966972278ac904b34446c) that you copied from ACM in **Name** field, select **CNAME** type, change the TTL to **60**, and add value (ex.a01ddf21e30afcd1076a0f2262621d44.tljzshvwok.acm-validations.aws.) that you copied from ACM in **Value** field. Then **Save Record Set**. 
+<!-- 6. A validation email will be sent to the email address configured for the
    domain. Ensure that you received this email and click the validation link
    before moving on. Now click **Continue** (it is also possible to use DNS
    validation to issue the certificate as well - follow the instructions on
-   the screen if you choose/need to validate this way)
-7. Once you have confirmed your certificate, it will appear as `Issued` in
+   the screen if you choose/need to validate this way) -->
+9. Once you have confirmed your certificate, it will appear as `Issued` in
    your list of certificates.
-8. Repeat steps 2-7 again in your second region, ap-southeast-1.
+10. Repeat steps 2-5 again in your second region, ap-southeast-1. The CNAME and Value are the same for the validation, so it will be automatically issued when the Ireland certification is confirmed.
 
 ### 3.3 Configure custom domains on each API, in each region
 
