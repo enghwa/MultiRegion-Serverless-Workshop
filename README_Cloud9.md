@@ -54,5 +54,13 @@ lts/boron -> v6.14.4
 lts/carbon -> v8.12.0 (-> N/A)
 
 ```
+
+## Clone the workshop project
+```bash
+git clone https://github.com/enghwa/MultiRegion-Serverless-Workshop.git
+
+```
+
+## Completion
 [Go back](README.md) or
 Start the lab: [Build an API layer](1_API/README.md)
