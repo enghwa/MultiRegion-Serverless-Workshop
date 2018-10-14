@@ -22,8 +22,6 @@ The following objects will be used as you create the resources in the console fo
   from DynamoDB using the `tickets-get.js` and `health-check.js` Lambda functions
 * `wild-rydes-dynamodb-post.json` - This is the policy needed in order to write
   to DynamoDB using the `tickets-post.js` Lambda function
-* `tickets-replicate.js` Lambda function to replicate new DynamoDB records to our
-  failover region
 * `health-check.js` - Lambda function for checking the status of our application health
 * `tickets-get.js` - Lambda function triggered by API Gateway to put application data
   into DynamoDB
