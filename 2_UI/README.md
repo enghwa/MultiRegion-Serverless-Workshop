@@ -115,7 +115,7 @@ Prerequisites section at the beginning of this guide if you have not already
 setup your Facebook Developer account and App ID.
 
 All of these attributes must be configured in
-`2_UI/src/environments/environment.ts`. Open up your favorite text editor and edit
+`2_UI/src/environments/environment.ts`. Open it at Cloud9 and edit
 this file before moving on. Please be sure to address all of the parameters the file
 requires or you will fail.  If you used the console instructions to deploy Module 1,
 then you can obtain the API Gateway Endpoint using the same method you used when you
