@@ -32,11 +32,11 @@ For the Ireland region, the full command will look like:
 
 Again, you can confirm that this was created successfully and see the resource
 in the AWS Console. Navigate to the CloudFormation service and take a look at
-the Outputs tab. This time you will see three keys:
+the *Outputs* tab. This time you will see these keys:
 
 * `CognitoIdentityPoolId`
 * `BucketName`
-* `BucketURL`
+<!-- * `BucketURL` -->
 
 Take note of the values for each of these, you will need them in the next steps.
 
@@ -44,6 +44,7 @@ Take note of the values for each of these, you will need them in the next steps.
 
 ![bucket-name](images/s3bucket-name.png)
 
+#### Cloudfront distribution for S3 bucket
 Next, we need to create a Cloudfront distribution for our S3 bucket:
 
     aws cloudformation deploy \
@@ -52,8 +53,7 @@ Next, we need to create a Cloudfront distribution for our S3 bucket:
     --stack-name ticket-service-ui-cloudfront \
     --parameter-overrides S3BucketName=[bucket-name]
 
-Note that you must replace `[bucket-name]` in this command with the bucket
-name output from the CloudFormation stack in step 1. . It typically takes about 15 minutes for the CloudFormation stack creation to finish. 
+Note that you must replace `[bucket-name]` in this command with the `BucketName` output from the CloudFormation stack in step 1. . It typically takes about 15 minutes for the CloudFormation stack creation to finish. 
 
 ## 2. Configure Federated Identities with Cognito
 
@@ -64,17 +64,17 @@ to the UI and submit their Unicorn issues.
 Go into your Facebook Developer account and create an new application by
 [following these steps](https://developers.facebook.com/apps/).
 
-Click on **Add a New App** in the upper right corner
+Click on **Add a New App** in the upper right corner: 
 
 ![Add new FB app](images/facebook-add-app2.png)
 
 Name your App anything you would like, and then click **Create App ID**
 
-Once you have created your App, you will need to select *Settings* -> *Basic* from the left menu
+Once you have created your App, you will need to select *Settings* -> *Basic* from the left menu: 
 
 ![FB Select Settings](images/facebook-select-settings.png)
 
-Next choose **Add Platform** from the bottom of the Settings screenshot
+Next choose **Add Platform** from the bottom of the Settings screenshot:
 
 ![FB Select Add Platform](images/facebook-add-platform2.png)
 
@@ -89,19 +89,22 @@ and then select **Save Changes** from the lower right.
 Once you are done with this, make note of the Facebook App ID - you will need this
 in the next step as well as when you build the website code in the next section.
 
-![Facebook Config](images/facebook-config.png)
+<!-- ![Facebook Config](images/facebook-config.png) -->
 
+#### Cognito Identity Pool with Facebook as identity provider
 Next, we must configure the Cognito Identity Pool to use Facebook as our
 identity provider. To do this, open up the AWS Console in your browser and
 navigate to Cognito from the menu. Double check that you are still in the
 primary region (EU Ireland).
 
-1. Choose Manage Federated Identities and select the SXRIdentityPool.
-2. Click the Edit Identity Pool button in the top right
-3. Take note of the Identity pool ID noted at the top of this page
-4. Navigate to the Authentication Providers section.
-5. Select the Facebook tab, hit Unlock then specify your Facebook App ID
+1. Choose **Manage Identities Pools** and select the `SXRIdentityPool`.
+2. Click the **Edit Identity Pool** button in the top right
+3. Take note of the `Identity pool ID` noted at the top of this page
+4. Navigate to the **Authentication Providers** section.
+5. Select the **Facebook** tab, hit Unlock then specify your Facebook App ID
 6. Save Changes at the bottom of the page.
+
+![Cognito IDP](images/cognito-idp.png)
 
 ## 3. Configure and build the application code
 
@@ -124,11 +127,16 @@ You can obtain the Cognito Identity Pool ID from the *Outputs* of the CloudfForm
 template you deployed in Module 2_UI.  Ensure that you copy the entire string,
 including the AWS region (in this case, it should be `eu-west-1`)
 
-You will need Node Package Manager (NPM) installed on your local machine
+![environment-ts](images/environment-ts.png)
+
+#### Build your AngularJS project
+
+In your AWS Cloud9 shell, build your AngularJS project:
+<!-- You will need Node Package Manager (NPM) installed on your local machine
 (check out the [workshop prerequisites](../README.md#prerequisites)) in order
 to build the application. You can follow instructions [Dev Instance
 Setup](../README_InstallDevDependencies.md) to set up a dev instance. Once you
-have created your dev instance build your project by executing the following:
+have created your dev instance build your project by executing the following: -->
 
 - navigate to the root folder of the ui project, i.e. 2_UI.
 - run `npm install` to install project dependencies
@@ -139,6 +147,7 @@ prerequisites section of the README to find instructions to install NPM.
 
 This will produce a `dist/` folder containing the compiled application with your
 custom settings.
+
 
 ## 4. Upload the application
 
