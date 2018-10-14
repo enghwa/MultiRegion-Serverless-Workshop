@@ -31,9 +31,9 @@ The following objects will be used as you create the resources in the console fo
 There are several steps needed to deploy the API and Lambda functions via the
 console. The basic steps are:
 
-1. Create the appropriate IAM policies and roles our four AWS Lambda functions
+1. Create the appropriate IAM policies and roles our three AWS Lambda functions
 2. Create the required Amazon DynamoDB table
-3. Create the four AWS Lambda functions
+3. Create the three AWS Lambda functions
 4. Create the Amazon API Gateway for the region you are currently deploying
 5. Testing to ensure our backend components are all working as expected
 
@@ -134,7 +134,7 @@ replicated in multiple regions.
 
 That's all that is required for now to set up the table.
 
-## 3. Create Four Lambda functions
+## 3. Create three Lambda functions
 
 Next, you will create three Lambda functions. First, navigate to **Lambda** in
 the console (again ensuring you are still in the correct region) and click
