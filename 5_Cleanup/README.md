@@ -7,7 +7,7 @@ workshop.
 
 If you manually deploy a region in module 1_API
 
-- Delete the four Lambda functions
+- Delete the three Lambda functions
 - Delete the SXRTickets DynamoDB table
 - Delete the API Gateway and Custom Domains
 - Delete the SSL Certificates in ACM (you may need to wait some time for resources
@@ -34,8 +34,8 @@ If you used CloudFormation to deploy a 1_API regions
 - In Amazon Certificate Manager, delete all SSL certificates you created (both regions)
 
 
-### Terminate the EC2 Instance
+### Delete Cloud9 environment (EC2 and EBS)
 
-- In EC2, select the AMI you created and then terminate the instance (this will delete
+- In Cloud9, select the environment you created and then click **Delete** (this will delete
   it completely, so if there is any data on it you wanted to save, ensure you take
   care of that first)
