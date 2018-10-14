@@ -82,7 +82,7 @@ Choose **Website** from the list of choices that comes up:
 
 ![FB Select Website](images/facebook-select-website.png)
 
-Then enter the Cloudfront URL (this is the CloudFormation output - `CfDistributionDomainNameWithOAI` from the `ticket-service-ui-cloudfront` template you deployed in earlier steps in this module) into the *Site URL* dialog
+Then enter the Cloudfront URL (this is the CloudFormation output - `CfDistributionDomainNameWithOAI` from the `ticket-service-ui-cloudfront` stack you deployed in earlier steps in this module) into the *Site URL* dialog
 and then select **Save Changes** from the lower right.
 ![FB enter URL and save](images/facebook-website-url2.png)
 
