@@ -321,10 +321,10 @@ already exists, try adding additional numbers or characters until you find an un
 You can create a bucket using the CLI with the following command:
 
 *Ireland* (choose a unique bucket name)
-     aws s3 mb s3://wildrydes-multiregion-blake-mitchell-eu-west-1 --region eu-west-1
+     aws s3 mb s3://wildrydes-multiregion-firstname-lastname-eu-west-1 --region eu-west-1
 
 *Singapore*
-     aws s3 mb s3://wildrydes-multiregion-blake-mitchell-ap-southeast-1 --region ap-southeast-1
+     aws s3 mb s3://wildrydes-multiregion-firstname-lastname-ap-southeast-1 --region ap-southeast-1
 
 Note that in this and in the following CLI commands, we are explicitly passing in the
 region. Like many things in AWS, S3 buckets are regional. If you do not specify a region,
@@ -398,9 +398,9 @@ convenience.
     --capabilities CAPABILITY_IAM
 
 This command may take a few minutes to run. In this time you can hop over to the console
-and watch all of the resources being created for you Open up the AWS Console in your browser
+and watch all of the resources being created for you. Open up the AWS Console in your browser
 and check you are in the correct region (EU Ireland) before selecting the CloudFormation
-service from the menu. You should your stack listed as `wild-rydes-api`. You can click
+service from the menu. You should check your stack listed as `wild-rydes-api`. You can click
 on this stack to see all of the resources it created.
 
 Once your stack has successfully completed, navigate to the Outputs tab of your stack
@@ -414,7 +414,18 @@ our `TicketGetFunction` Lambda function and the `POST` method calling our `Ticke
 Lambda function. You can also see that an empty DynamoDB table was set up as well as IAM
 roles to allow our functions to speak to DynamoDB.
 
-You can confirm that your API is working by copying your API URL and appending `/ticket`
+**IMPORTANT** DyanmoDB Global Tables doesn't support the CloudFormation yet, we need to create a
+globl table using the console or AWS CLI (To create a global table using the console, you can refer 
+to the '2. Create the DynamoDB Global Table' section under 'Console step-by-step instructions'). 
+Follow the steps to create a global table (SXRTickets) consisting of replica tables in the Ireland and 
+Singapore regions using the AWS CLI. 
+
+    aws dynamodb create-global-table \
+    --global-table-name SXRTickets \
+    --replication-group RegionName = eu-west-1 RegionName = ap-southeast-1 \
+    --region eu-west-1 \
+
+Now, you can confirm that your API is working by copying your API URL and appending `/ticket`
 to it before navigating to it into your browser. It should return the following:
 
     {"Items":[],"Count":0,"ScannedCount":0}

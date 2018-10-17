@@ -179,6 +179,10 @@ Resources:
      ProvisionedThroughput:
        ReadCapacityUnits: 5
        WriteCapacityUnits: 5
+     StreamSpecification:
+       StreamEnabled: true
+       StreamViewType: NEW_AND_OLD_IMAGES
+
 Outputs:
   ApiUrl:
     Description: URL of your API endpoint
