@@ -134,7 +134,7 @@ own domain via Route 53.
 10. Once you have confirmed your certificate, it will appear as `Issued` in
 your list of certificates.
 
-### 3.3 Configure custom domains on each API, in each region
+### 4.2 Configure custom domains on each API, in each region
 
 Now that you have a domain name and a valid certificate for it, you can go
 ahead and setup your APIs for each region to use your custom domain. API
@@ -160,8 +160,8 @@ for convenience.
 Navigate over to the **API Gateway** service, choose **Custom Domain Names**
 then go ahead and configure a custom domain name for `api.example.com`. Make
 sure to choose the **Regional** endpoint configuration. For the Base Path
-Mappings you will want to choose `/` as the path, your API as the destination
-and `prod` as the stage then hit **Save**. If you get an error about rate
+Mappings, you choose `/` as the path and `prod` as the destination, then hit **Save**. 
+If you get an error about rate
 limits, wait a minute before attempting to create again.
 
 ![Custom API Gateway domain](images/custom-domain.png)
@@ -174,7 +174,7 @@ configuration for the Ireland region should look similar to the below image.
 
 ![API Gateway Target Domain](images/custom-domains-configured-ireland.png)
 
-### 3.4 Configure DNS records
+### 4.3 Configure DNS records
 
 Now let's start pointing your domain name at the API endpoints. In this step
 you will configure CNAME records for your `ireland.` and `singapore.`
@@ -210,7 +210,7 @@ error if you try to use HTTP. It may take a few minutes for your records to
 become active so check back later if you do not get a response as this must
 work in order for your health check to function.
 
-### 3.4 Configure a health check for the primary region
+### 4.4 Configure a health check for the primary region
 
 In this step you will configure a Route53 health check on the primary
 (Ireland) regional endpoint. This health check will be responsible for
@@ -249,7 +249,7 @@ before proceeding.
 ![Route53 Health check configuration](images/created-health-check.png)
 
 
-### 3.5 Configure DNS failover records
+### 4.5 Configure DNS failover records
 
 Now let's configure the zone records for our `api.` subdomain prefix. You will
 configure these as CNAME ALIAS records in a primary/secondary failover pattern using
@@ -288,7 +288,7 @@ always being served.
 
 ![Ireland health check response](images/ireland-health-response.png)
 
-### 3.6 Update your environments.ts file with the new API Gateway Endpoint
+### 4.6 Update your environments.ts file with the new API Gateway Endpoint
 
 Now that we have completed failover testing, you will need to change the API
 endpoint in your *2_UI/src/environments/environments.ts* file to use our newly
