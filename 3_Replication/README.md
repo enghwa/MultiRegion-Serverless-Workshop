@@ -210,7 +210,7 @@ error if you try to use HTTP. It may take a few minutes for your records to
 become active so check back later if you do not get a response as this must
 work in order for your health check to function.
 
-### 4.4 Configure a health check for the primary region
+### 4.4 Configure a health check for both regions
 
 In this step you will configure a Route53 health check on the primary
 (Ireland) regional endpoint. This health check will be responsible for
@@ -248,6 +248,10 @@ before proceeding.
 
 ![Route53 Health check configuration](images/created-health-check.png)
 
+Do the same for the Singapore region’s health check API. Once complete, you should be 
+able to see the health status turn to green in the health checks in Route 53.
+
+![Route53 Health check configuration](images/health-check-both-regions.png)
 
 ### 4.5 Configure DNS failover records
 
