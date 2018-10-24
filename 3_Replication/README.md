@@ -4,7 +4,7 @@ Now that we have the app set up, lets replicate this in a second region so we
 have something to failover to. For this workshop, we will focus on the API
 layer down, leaving the UI in a single region.
 
-## 1. Configure Route53 failover
+## 1. Configure Route53
 
 We need a way to be able to failover quickly with minimal impact to the
 customer. Route53 provides an easy way to do this using DNS and healthchecks.
@@ -113,7 +113,7 @@ own domain via Route 53.
 
 1. Ensure you are in your primary region, eu-west1.
 2. Navigate to the **Certificate Manager** service page
-3. Click **Request a certificate** and select **Request a public certificat**
+3. Click **Request a certificate** and select **Request a public certificate**
 4. In this next step you will configure the domain name you just registered
    (or repurposed). You will want to add two domains to make sure you can
    access your site using subdomains. Add both `example.com` and
@@ -256,8 +256,13 @@ able to see the health status turn to green in the health checks in Route 53.
 ### 4.5 Configure DNS failover records
 
 Now let's configure the zone records for our `api.` subdomain prefix. You will
-configure these as CNAME ALIAS records in a primary/secondary failover pattern using
-your health check.
+configure these as CNAME ALIAS records in a weighted pattern using
+your health check for Multi-region active-active backend.
+
+**Note.** To create records for complex routing configurations, you can also use the traffic flow 
+visual editor and save the configuration as a traffic policy. However, we use the routing policy
+for this workshop, as it is not possible to create an Alias record pointing to a DNS name that is 
+being managed by a traffic policy.
 
 #### High-level instructions
 
@@ -268,22 +273,21 @@ CNAME as the type. Now change Alias to Yes and select the `ireland.` prefixed
 version of your domain. Since this is an alias, it should appear in the
 dropdown list.
 
-Next, choose the Failover routing policy. You'll want to select the Primary
-record type for your Ireland record. Turn on both Evaluate Target Health and
-Associate with Health Check then select the `ireland-api` health check you
-created previously. Hit **Save Record Set**.
+Next, choose the Weighted routing policy. You can select a value that determines 
+the proportion of DNS queries that Route 53 responds for your Ireland record. (ex. 50)
+Turn on both Evaluate Target Health and Associate with Health Check then select the `ireland-api` 
+health check you created previously. Hit **Save Record Set**.
 
-You will now want to repeat this step again but for your Singapore domain. IMPORTANT:
-You will select the Secondary record type and *not* associate with a health check
-this time. Note that if you were to associate a health check with the second
-region it would also be taken into consideration and if the health check was
-failing in both regions then no failover would occur. By not associating the
-second region with a health check, it will always be presumed to be healthy.
+**Note.** Weighted routing lets you associate multiple resources with a single 
+domain name (example.com) or subdomain name (acme.example.com) and choose how much 
+traffic is routed to each resource. 
+
+You will now want to repeat this step again but for your Singapore domain. 
 
 Your completed DNS configuration should look something like the screenshot
 below.
 
-![Zone failover configuration](images/zone-configuration.png)
+![Zone failover configuration](images/zone-configuration2.png)
 
 With the DNS configured, you should now be able to visit the `api.` prefix of
 your domain (remember to use HTTPS). Go to the `/health` path and notice how
