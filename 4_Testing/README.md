@@ -1,6 +1,6 @@
-# Testing failover
+# Testing Multi-region Active-active
 
-It is one thing to configure failover but to have real confidence in our
+It is one thing to configure active-active but to have real confidence in our
 setup, we need to test it. In this module we will artificially break our
 primary region and observe our failover in action.
 
@@ -32,12 +32,10 @@ Now head over to **Route53** and select **Health checks**. Within a few
 minutes, your health check should turn from green to red and display a
 failure.
 
-
-
 ![Failed health check](images/failed-health.png)
 
 Since your DNS records are configured to use this health check, Route53 should
-automatically use this information to point your domain at your secondary
+automatically use this information to point your domain at your another
 region.
 
 You should now be able to go back and visit the `api.` prefix of your domain
