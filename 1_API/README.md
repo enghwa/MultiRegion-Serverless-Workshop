@@ -152,7 +152,8 @@ name you created previously to it and click **Create function**
 On the next screen, ensure the runtime is `Node.js 6.10`.  If it isn’t, simply
 select it.
 
-For the Handler, enter `tickets-get.handler` and then paste the following code into the
+For the Handler, enter `tickets-get.handler`, and modify the `index.js` name to `tickets-get.js` 
+using Rename. Then paste the following code into the
 editor you see on your screen:
 
 [TicketGetFunction](tickets-get.js)
@@ -162,7 +163,7 @@ Next, under `Environment Variables`, enter the key **TABLE_NAME** and the value 
 *Note that entering these Environment Variables exactly as shown is very important -
 your function will not work - case matters*
 
-![Create Lambda Wild Rydes Get](images/create-lambda-ticket-get.png)
+![Create Lambda Wild Rydes Get](images/create-lambda-ticket-get2.png)
 
 Once everything is set correctly, click **Save** near the top center of the screen.
 
