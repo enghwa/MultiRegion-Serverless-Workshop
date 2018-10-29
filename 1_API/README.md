@@ -321,12 +321,12 @@ already exists, try adding additional numbers or characters until you find an un
 
 You can create a bucket using the CLI with the following command:
 
-*Ireland* (choose a unique bucket name)
+
+*Ireland Bucket* (choose a unique bucket name)
      aws s3 mb s3://wildrydes-multiregion-firstname-lastname-eu-west-1 --region eu-west-1
-<!--
-*Singapore*
+*Singapore Bucket*
      aws s3 mb s3://wildrydes-multiregion-firstname-lastname-ap-southeast-1 --region ap-southeast-1
--->
+
 Note that in this and in the following CLI commands, we are explicitly passing in the
 region. Like many things in AWS, S3 buckets are regional. If you do not specify a region,
 a default will be used which may not be what you want.
@@ -351,21 +351,21 @@ You can do this using the following CLI command. Note that you must replace
     --region eu-west-1 \
     --template-file wild-rydes-api.yaml \
     --output-template-file wild-rydes-api-output.yaml \
-    --s3-bucket [bucket_name_you_created_above]
+    --s3-bucket [Ireland bucket_name_you_created_above]
 
 **IMPORTANT** DO NOT deploy any resources to Singapore during your initial pass
 on Module 1. You will come back in Module 3 and then deploy the same components
 to Singapore. We are providing the commands for both regions here for your
 convenience.
 
-<!-- *Singapore* (do not deploy during your first pass on Module 1_API)
+*Singapore* (do not deploy during your first pass on Module 1_API)
 
     aws cloudformation package \
     --region ap-southeast-1 \
     --template-file wild-rydes-api.yaml \
-    --output-template-file wild-rydes-api-output.yaml \
-    --s3-bucket [bucket_name_you_created_above]
--->
+    --output-template-file wild-rydes-api-output-ap-southeast-1.yaml \
+    --s3-bucket [Singapore bucket_name_you_created_above]
+
 
 If all went well, you should get a success message and instructions to deploy your new template.
 
@@ -393,11 +393,12 @@ convenience.
 
 *Singapore* (do not deploy during your first pass on Module 1_API)
 
-    CodeUri=`egrep CodeUri wild-rydes-api-output.yaml |cut -f2- -d\:|uniq`
+    DeployBucket=`egrep CodeUri wild-rydes-api-output-ap-southeast-1.yaml  |cut -f2- -d\/|cut -f2 -d\/|uniq`
+    DeployKey=`egrep CodeUri wild-rydes-api-output-ap-southeast-1.yaml  |cut -f2- -d\/|cut -f3 -d\/|uniq`
 
     aws cloudformation deploy \
     --region ap-southeast-1 \
-    --parameter-overrides "CodeUri=$CodeUri" \
+    --parameter-overrides DeployBucket=$DeployBucket DeployKey=$DeployKey \
     --template-file wild-rydes-api-ap-southeast-1.yaml \
     --stack-name wild-rydes-api \
     --capabilities CAPABILITY_IAM
