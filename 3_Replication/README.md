@@ -276,7 +276,7 @@ dropdown list.
 Next, choose the Weighted routing policy. You can select a value that determines 
 the proportion of DNS queries that Route 53 responds for your Ireland record. (ex. 50)
 Turn on both Evaluate Target Health and Associate with Health Check then select the `ireland-api` 
-health check you created previously. Hit **Save Record Set**.
+health check you created previously. Hit **Create**.
 
 **Note.** Weighted routing lets you associate multiple resources with a single 
 domain name (example.com) or subdomain name (acme.example.com) and choose how much 
@@ -311,7 +311,7 @@ testing the UI in the second module.
 Ensure you run `npm run build` from the *2_UI* directory, and then upload the */dist*
 contents to the S3 bucket using the same *aws s3* command you used in the second module. ie:
 
-    aws s3 sync --acl public-read --delete dist/ s3://[bucket_name]
+    aws s3 sync --delete dist/ s3://[bucket_name]
 
 ## Completion
 
