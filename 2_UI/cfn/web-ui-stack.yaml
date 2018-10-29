@@ -53,7 +53,7 @@ Resources:
       # AccessControl: PublicRead
       WebsiteConfiguration:
           IndexDocument: index.html
-          ErrorDocument: error.html
+          ErrorDocument: index.html
 
 
 Outputs:
