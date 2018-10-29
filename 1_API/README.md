@@ -397,7 +397,7 @@ convenience.
 
     aws cloudformation deploy \
     --region ap-southeast-1 \
-    --parameter-overrides CodeUri="CodeUri=$CodeUri"
+    --parameter-overrides "CodeUri=$CodeUri" \
     --template-file wild-rydes-api-ap-southeast-1.yaml \
     --stack-name wild-rydes-api \
     --capabilities CAPABILITY_IAM

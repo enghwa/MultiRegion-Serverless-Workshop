@@ -39,15 +39,15 @@ Resources:
             - 'HEAD'
             - 'GET'
           Compress: false
-          DefaultTTL: 86400
+          DefaultTTL: 30
           ForwardedValues:
             Cookies:
               Forward: 'none'
             Headers:
               - 'Origin'
             QueryString: false
-          MaxTTL: 31536000
-          MinTTL: 86400
+          MaxTTL: 360
+          MinTTL: 30
           TargetOriginId: !Sub 's3-origin-${S3BucketName}'
           ViewerProtocolPolicy: 'redirect-to-https'
         DefaultRootObject: 'index.html'
