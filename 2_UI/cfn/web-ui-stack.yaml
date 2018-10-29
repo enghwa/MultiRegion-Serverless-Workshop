@@ -49,11 +49,11 @@ Resources:
 # We will use Cloudfront with OAI, so no need public S3 bucket
   WebsiteBucket:
     Type: AWS::S3::Bucket
-    # Properties:
+    Properties:
       # AccessControl: PublicRead
-      # WebsiteConfiguration:
-      #     IndexDocument: index.html
-      #     ErrorDocument: error.html
+      WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: error.html
 
 
 Outputs:
