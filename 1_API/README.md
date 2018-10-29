@@ -310,7 +310,7 @@ at the resources it is creating and how they are defined.
 
 ## 1. Create an S3 bucket to store the app code
 
-We'll first need a bucket to store our source code in AWS.
+We'll first need a bucket to store our AWS Lambda source code in AWS.
 
 #### High-level Instructions
 
@@ -323,10 +323,10 @@ You can create a bucket using the CLI with the following command:
 
 *Ireland* (choose a unique bucket name)
      aws s3 mb s3://wildrydes-multiregion-firstname-lastname-eu-west-1 --region eu-west-1
-
+<!--
 *Singapore*
      aws s3 mb s3://wildrydes-multiregion-firstname-lastname-ap-southeast-1 --region ap-southeast-1
-
+-->
 Note that in this and in the following CLI commands, we are explicitly passing in the
 region. Like many things in AWS, S3 buckets are regional. If you do not specify a region,
 a default will be used which may not be what you want.

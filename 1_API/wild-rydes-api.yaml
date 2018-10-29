@@ -179,9 +179,9 @@ Resources:
      ProvisionedThroughput:
        ReadCapacityUnits: 5
        WriteCapacityUnits: 5
-     StreamSpecification:
-       StreamEnabled: true
-       StreamViewType: NEW_AND_OLD_IMAGES
+    #  StreamSpecification:
+    #    StreamEnabled: true
+    #    StreamViewType: NEW_AND_OLD_IMAGES
 
 Outputs:
   ApiUrl:
