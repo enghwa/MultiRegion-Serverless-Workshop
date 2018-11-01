@@ -1,8 +1,11 @@
-# Replicate to a second region
+<!-- # Replicate to a second region --> 
+# Configure Active-Active Multi-Region
 
-Now that we have the app set up, lets replicate this in a second region so we
+Now that we have the app set up, lets configure Route53 for active-active multi-region solution. 
+For this workshop, we replicated the API layer on both regions, but leaving the UI in a single region (Ireland).
+<!-- replicate this in a second region so we
 have something to failover to. For this workshop, we will focus on the API
-layer down, leaving the UI in a single region.
+layer down, leaving the UI in a single region. --> 
 
 ## 1. Configure Route53
 
@@ -60,7 +63,7 @@ AWS Certificate Manager and a health check in Route53 later.
 For the remainder of this workshop we will use `example.com` as to
 demonstrate. Please substitute your own domain into any commands or configurations.
 
-## 2. Replicate the primary API stack
+<!-- ## 2. Replicate the primary API stack
 
 For the first part of this module, all of the steps will be the same as module
 1_API but performed in our secondary region (AP Singapore) instead. Please follow
@@ -73,9 +76,9 @@ Module 1_API
 * [Build an API layer](../1_API/README.md)
 
 Once you are done, verify that you get a second API URL for your application from
-the *outputs* of the CloudFormation template you deployed.
+the *outputs* of the CloudFormation template you deployed. -->
 
-## 3. Replicating the data
+<!-- ## 3. Replicating the data
 
 So now that you have a separate stack, let's take a look at continuously
 replicating the data in DynamoDB from the primary region (Ireland) to the
@@ -93,11 +96,11 @@ a best effort to determine the last writer.
 
 You can test to see if it is working by creating a new ticket in the UI you deployed 
 in the second module.  Then, look at the SXRTickets table in *source* region (double check this) DynamoDB and the DynamoDB table in your *secondary* region, and see if you can see the record
-for the ticket you just created.
+for the ticket you just created. --> 
 
-## 4. Configure Route53 failover (Continue)
+## 2. Configure Route53 failover (Continue)
 
-### 4.1 Configure a certificate in Certificate Manager in each region
+### 2.1 Configure a certificate in Certificate Manager in each region
 
 We will need an SSL certificate in order to configure our domain name with API
 Gateway. AWS makes this simple with AWS Certificate Manager.
@@ -134,7 +137,7 @@ own domain via Route 53.
 10. Once you have confirmed your certificate, it will appear as `Issued` in
 your list of certificates.
 
-### 4.2 Configure custom domains on each API, in each region
+### 2.2 Configure custom domains on each API, in each region
 
 Now that you have a domain name and a valid certificate for it, you can go
 ahead and setup your APIs for each region to use your custom domain. API
@@ -174,7 +177,7 @@ configuration for the Ireland region should look similar to the below image.
 
 ![API Gateway Target Domain](images/custom-domains-configured-ireland.png)
 
-### 4.3 Configure DNS records
+### 2.3 Configure DNS records
 
 Now let's start pointing your domain name at the API endpoints. In this step
 you will configure CNAME records for your `ireland.` and `singapore.`
@@ -210,7 +213,7 @@ error if you try to use HTTP. It may take a few minutes for your records to
 become active so check back later if you do not get a response as this must
 work in order for your health check to function.
 
-### 4.4 Configure a health check for both regions
+### 2.4 Configure a health check for both regions
 
 In this step you will configure a Route53 health check on the primary
 (Ireland) regional endpoint. This health check will be responsible for
@@ -253,7 +256,7 @@ able to see the health status turn to green in the health checks in Route 53.
 
 ![Route53 Health check configuration](images/health-check-both-regions.png)
 
-### 4.5 Configure DNS failover records
+### 2.5 Configure DNS failover records
 
 Now let's configure the zone records for our `api.` subdomain prefix. You will
 configure these as CNAME ALIAS records in a weighted pattern using
@@ -296,7 +299,7 @@ always being served.
 
 ![Ireland health check response](images/ireland-health-response.png)
 
-### 4.6 Update your environments.ts file with the new API Gateway Endpoint
+### 2.6 Update your environments.ts file with the new API Gateway Endpoint
 
 Now that we have completed failover testing, you will need to change the API
 endpoint in your *2_UI/src/environments/environments.ts* file to use our newly
