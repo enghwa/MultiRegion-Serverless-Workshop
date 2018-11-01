@@ -7,7 +7,7 @@ For this workshop, we replicated the API layer on both regions, but leaving the 
 have something to failover to. For this workshop, we will focus on the API
 layer down, leaving the UI in a single region. --> 
 
-## 1. Configure Route53
+## 1. Configure Route53 Domain
 
 We need a way to be able to failover quickly with minimal impact to the
 customer. Route53 provides an easy way to do this using DNS and healthchecks.
@@ -98,7 +98,7 @@ You can test to see if it is working by creating a new ticket in the UI you depl
 in the second module.  Then, look at the SXRTickets table in *source* region (double check this) DynamoDB and the DynamoDB table in your *secondary* region, and see if you can see the record
 for the ticket you just created. --> 
 
-## 2. Configure Route53 failover
+## 2. Configure ACM and Custom Domains in API Gateway
 
 ### 2.1 Configure a certificate in Certificate Manager in each region
 
@@ -177,7 +177,9 @@ configuration for the Ireland region should look similar to the below image.
 
 ![API Gateway Target Domain](images/custom-domains-configured-ireland.png)
 
-### 2.3 Configure DNS records
+## 3. Configure Route53 DNS records
+
+### 3.1 Configure DNS records
 
 Now let's start pointing your domain name at the API endpoints. In this step
 you will configure CNAME records for your `ireland.` and `singapore.`
@@ -213,7 +215,7 @@ error if you try to use HTTP. It may take a few minutes for your records to
 become active so check back later if you do not get a response as this must
 work in order for your health check to function.
 
-### 2.4 Configure a health check for both regions
+### 3.2 Configure a health check for both regions
 
 In this step you will configure a Route53 health check on the primary
 (Ireland) regional endpoint. This health check will be responsible for
@@ -256,7 +258,7 @@ able to see the health status turn to green in the health checks in Route 53.
 
 ![Route53 Health check configuration](images/health-check-both-regions.png)
 
-### 2.5 Configure DNS failover records
+### 3.3 Configure DNS Routing Policy
 
 Now let's configure the zone records for our `api.` subdomain prefix. You will
 configure these as CNAME ALIAS records in a weighted pattern using
@@ -299,7 +301,7 @@ always being served.
 
 ![Ireland health check response](images/ireland-health-response.png)
 
-### 2.6 Update your environments.ts file with the new API Gateway Endpoint
+## 4. Update your UI with new API Gateway Endpoint
 
 Now that we have completed failover testing, you will need to change the API
 endpoint in your *2_UI/src/environments/environments.ts* file to use our newly
