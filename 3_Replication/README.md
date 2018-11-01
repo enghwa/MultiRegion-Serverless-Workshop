@@ -1,5 +1,5 @@
 <!-- # Replicate to a second region --> 
-# Configure Active-Active Multi-Region
+# Configure Active-Active Route53
 
 Now that we have the app set up, lets configure Route53 for active-active multi-region solution. 
 For this workshop, we replicated the API layer on both regions, but leaving the UI in a single region (Ireland).
