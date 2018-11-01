@@ -98,7 +98,7 @@ You can test to see if it is working by creating a new ticket in the UI you depl
 in the second module.  Then, look at the SXRTickets table in *source* region (double check this) DynamoDB and the DynamoDB table in your *secondary* region, and see if you can see the record
 for the ticket you just created. --> 
 
-## 2. Configure Route53 failover (Continue)
+## 2. Configure Route53 failover
 
 ### 2.1 Configure a certificate in Certificate Manager in each region
 
