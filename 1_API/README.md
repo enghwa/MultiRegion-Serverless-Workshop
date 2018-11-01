@@ -138,7 +138,7 @@ That's all that is required for now to set up the table.
 ## 3. Create three Lambda functions
 
 Next, you will create three Lambda functions. First, navigate to **Lambda** in
-the console (again ensuring you are still in the correct region) and click
+the console (again ensuring you are still in the correct region - Ireland) and click
 **Create a function**
 
 ![Create Lambda function](images/create-lambda-function.png)
