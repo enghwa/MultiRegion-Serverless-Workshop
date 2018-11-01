@@ -358,7 +358,7 @@ on Module 1. You will come back in Module 3 and then deploy the same components
 to Singapore. We are providing the commands for both regions here for your
 convenience.
 
-*Singapore* (do not deploy during your first pass on Module 1_API)
+*Singapore* 
 
     aws cloudformation package \
     --region ap-southeast-1 \
@@ -391,28 +391,18 @@ on Module 1. You will come back in Module 3 and then deploy the same components
 to Singapore. We are providing the commands for both regions here for your
 convenience.
 
-*Singapore* (do not deploy during your first pass on Module 1_API)
-
-    DeployBucket=`egrep CodeUri wild-rydes-api-output-ap-southeast-1.yaml  |cut -f2- -d\/|cut -f2 -d\/|uniq`
-    DeployKey=`egrep CodeUri wild-rydes-api-output-ap-southeast-1.yaml  |cut -f2- -d\/|cut -f3 -d\/|uniq`
+*Singapore* 
 
     aws cloudformation deploy \
     --region ap-southeast-1 \
-    --parameter-overrides DeployBucket=$DeployBucket DeployKey=$DeployKey \
-    --template-file wild-rydes-api-ap-southeast-1.yaml \
+    --template-file wild-rydes-api-output-ap-southeast-1.yaml \
     --stack-name wild-rydes-api \
     --capabilities CAPABILITY_IAM
 
-<!--    aws cloudformation deploy \
-    --region ap-southeast-1 \
-    --template-file wild-rydes-api-output.yaml \
-    --stack-name wild-rydes-api \
-    --capabilities CAPABILITY_IAM
--->
 
 This command may take a few minutes to run. In this time you can hop over to the console
 and watch all of the resources being created for you. Open up the AWS Console in your browser
-and check you are in the correct region (EU Ireland) before selecting the CloudFormation
+and check you are in the respective regions (EU Ireland or Asia Pacific Singapore) before selecting the CloudFormation
 service from the menu. You should check your stack listed as `wild-rydes-api`. You can click
 on this stack to see all of the resources it created.
 
@@ -426,17 +416,6 @@ and the API Gateway. Note how the gateway was configured with the `GET` method c
 our `TicketGetFunction` Lambda function and the `POST` method calling our `TicketPostFunction`
 Lambda function. You can also see that an empty DynamoDB table was set up as well as IAM
 roles to allow our functions to speak to DynamoDB.
-
-**IMPORTANT** DyanmoDB Global Tables doesn't support the CloudFormation yet, we need to create a
-globl table using the console or AWS CLI (To create a global table using the console, you can refer 
-to the '2. Create the DynamoDB Global Table' section under 'Console step-by-step instructions'). 
-Follow the steps to create a global table (SXRTickets) consisting of replica tables in the Ireland and 
-Singapore regions using the AWS CLI. 
-
-    aws dynamodb create-global-table \
-    --global-table-name SXRTickets \
-    --replication-group RegionName = eu-west-1 RegionName = ap-southeast-1 \
-    --region eu-west-1 \
 
 Now, you can confirm that your API is working by copying your API URL and appending `/ticket`
 to it before navigating to it into your browser. It should return the following:
@@ -452,6 +431,37 @@ to it before navigating to it into your browser. It should return the following:
     }
 
 Make note of the API Endpoint URL - you will need this in Module 2_UI.
+
+#### Enable DynamoDB Global Table using CLI
+
+**IMPORTANT** DyanmoDB Global Tables doesn't support the CloudFormation yet, we need to create a
+global table using the console or AWS CLI (To create a global table using the console, you can refer 
+to the '2. Create the DynamoDB Global Table' section under 'Console step-by-step instructions'). 
+
+Follow the steps to create a global table (SXRTickets) consisting of replica tables in the Ireland and 
+Singapore regions using the AWS CLI. 
+
+*Enable Streaming on DynamoDB*
+_Ireland_
+
+    aws dynamodb update-table --table-name SXRTickets \
+    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
+    --region eu-west-1 
+
+_Singapore_
+
+    aws dynamodb update-table --table-name SXRTickets \
+    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
+    --region ap-southeast-1
+
+
+*Enable DynamoDB Streaming*
+
+    aws dynamodb create-global-table \
+    --global-table-name SXRTickets \
+    --replication-group RegionName=eu-west-1 RegionName=ap-southeast-1 \
+    --region eu-west-1
+
 
 </details>
 
