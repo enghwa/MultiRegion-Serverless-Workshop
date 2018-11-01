@@ -455,7 +455,7 @@ _Singapore_
     --region ap-southeast-1
 
 
-*Enable DynamoDB Streaming*
+*Enable DynamoDB Global Table between Ireland and Singapore*
 
     aws dynamodb create-global-table \
     --global-table-name SXRTickets \

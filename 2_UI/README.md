@@ -45,7 +45,7 @@ Take note of the values for each of these, you will need them in the next steps.
 ![bucket-name](images/s3bucket-name.png)
 
 #### Cloudfront distribution for S3 bucket
-Next, we need to create a Cloudfront distribution for our S3 bucket:
+Next, we need to create a Cloudfront distribution for our S3 bucket - `BucketName` : 
 
     aws cloudformation deploy \
     --region eu-west-1 \
