@@ -6,7 +6,7 @@ DynamoDB Global Tables. You will also create the IAM polices and roles required 
 these components.
 
 There are two ways to complete this module, *Console step-by-step
-instructions* and *CloudFormation using CLI* for both Ireland and Singapore regions.
+instructions* and *CLI step-by-step instruction* for both Ireland and Singapore regions.
 <!-- For learning purposes, we recommend that workshop participants step through the *Console step-by-step
 instructions* while deploying the primary Ireland region, and then for time reasons,
 use the provided CloudFormation instructions to quickly set up the second Singapore
@@ -33,12 +33,10 @@ There are several steps needed to deploy the API and Lambda functions via the
 console. The basic steps are:
 
 1. Create the appropriate IAM policies and roles our three AWS Lambda functions
-2. Create the required Amazon DynamoDB table
-3. Create the three AWS Lambda functions
-4. Create the Amazon API Gateway for the region you are currently deploying
+2. Create the required Amazon DynamoDB Global table
+3. Create the three AWS Lambda functions (both Ireland and Singapore)
+4. Create the Amazon API Gateway for the region you are currently deploying (both Ireland and Singapore)
 5. Testing to ensure our backend components are all working as expected
-
-
 
 ## 1. Create IAM Policies and Roles
 
@@ -181,8 +179,6 @@ information needed for all three functions.  Note that you have already done the
 Note that proper capitalization matters with `Environment Variables`.  Improper
 case will cause issues later in the workshop.
 
-After you create three lambada functions in **Ireland**, go to **Singapore** and create the same three lambda functions.
-
 ## 4. Create API Gateway Endpoint
 
 In the console, under Application Services, open Amazon API Gateway and click on
@@ -283,7 +279,8 @@ instead.  You should get something like the following in your browser:
 Make note of the API Endpoint URL - you will need this in Module 2_UI.
 
 You have now completed the setup of all the API and backend components needed for
-your primary region. Go to **Singapore** and create the same API Gateway Endpoint.
+your primary region. Go to **Singapore** and create the same **three Lambda Functions (## 3.) 
+and API Gateway Endpoint (## 4.)**.
 
 </details>
 
