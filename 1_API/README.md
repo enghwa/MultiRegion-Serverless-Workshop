@@ -5,11 +5,12 @@ backend components include several AWS Lambda functions, two API Gateway Endpoin
 DynamoDB Global Tables. You will also create the IAM polices and roles required by
 these components.
 
-There are two ways to complete this module.  For learning purposes, we
-recommend that workshop participants step through the *Console step-by-step
+There are two ways to complete this module, *Console step-by-step
+instructions* and *CloudFormation using CLI* for both Ireland and Singapore regions.
+<!-- For learning purposes, we recommend that workshop participants step through the *Console step-by-step
 instructions* while deploying the primary Ireland region, and then for time reasons,
 use the provided CloudFormation instructions to quickly set up the second Singapore
-region during module 3.
+region during module 3. --> 
 
 Both sets of instructions are provided below – simply expand your preferred path.
 
@@ -97,10 +98,10 @@ the corresponding policy you created earlier.
 ## 2. Create the DynamoDB Global Table
 
 Next we will create the DynamoDB Table for our application data. Ensure you
-are set to the region you are currently deploying -  Ireland (eu-west-1) or
-Singapore (ap-southeast-1) in the upper right corner of the console. If
+are set to the region you are currently deploying -  Ireland (eu-west-1) 
+in the upper right corner of the console. <!-- If
 you mistakenly create the DynamoDB table in the wrong region, the application
-will not work.
+will not work. --> 
 
 In the console, open **DynamoDB** (it can be found under Database).  Select
 **Create Table**. Your screen may be slightly different depending on whether
@@ -180,6 +181,8 @@ information needed for all three functions.  Note that you have already done the
 Note that proper capitalization matters with `Environment Variables`.  Improper
 case will cause issues later in the workshop.
 
+After you create three lambada functions in **Ireland**, go to **Singapore** and create the same three lambda functions.
+
 ## 4. Create API Gateway Endpoint
 
 In the console, under Application Services, open Amazon API Gateway and click on
@@ -254,9 +257,6 @@ problems later on.
 
 ![deploy api to prod](images/deploy-api-prod-new-stage.png)
 
-You have now completed the setup of all the API and backend components needed for
-your primary region
-
 ## 5. Test your API Gateway Endpoints
 
 While still in API Gateway, select **Stages** from the left menu under your
@@ -281,6 +281,9 @@ instead.  You should get something like the following in your browser:
     }
 
 Make note of the API Endpoint URL - you will need this in Module 2_UI.
+
+You have now completed the setup of all the API and backend components needed for
+your primary region. Go to **Singapore** and create the same API Gateway Endpoint.
 
 </details>
 

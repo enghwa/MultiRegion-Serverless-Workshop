@@ -62,8 +62,7 @@ region:
 * Secondary: `ap-southeast-1` (Singapore)
 
 Using the two regions above for this workshop is mandatory.  We will start with
-`eu-west-1` (Ireland).  You will not deploy anything in `ap-southeast-1` (Singapore)
-until Module 3.
+`eu-west-1` (Ireland) and then `ap-southeast-1` (Singapore). 
 
 ### Modules
 
