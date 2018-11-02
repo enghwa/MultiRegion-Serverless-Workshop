@@ -42,8 +42,7 @@ console. The basic steps are:
 
 Let’s go ahead and create all the needed polices and roles for our workshop.
 Because IAM roles and policies are global in nature, you only need to do this once.
-*You may skip this step when you are asked to deploy the failover region*
-
+ 
 Log into the AWS Console then select the **IAM** service. Now select
 **Policies** from the left and click on the **Create policy** button.  Then
 select the *JSON* tab and paste the code below into the editing window.
@@ -303,10 +302,12 @@ files within. You will see several files - here are descriptions of each:
 There is no modification necessary to this application code so we can go ahead and
 deploy it to AWS. Since it comes with a CloudFormation template, we can use this to
 upload our code and create all of the necessary AWS resources for us rather than doing
-this manually using the console which would take much longer. We recommend deploying the
+this manually using the console which would take much longer. 
+<!--We recommend deploying the
 primary region using the Console step-by-step instructions and then deploying the failover
-region using the CloudfFormation template  Feel free to open the template and take a look
-at the resources it is creating and how they are defined.
+region using the CloudfFormation template. 
+--> 
+Feel free to open the template and take a look at the resources it is creating and how they are defined.
 
 ## 1. Create an S3 bucket to store the app code
 
@@ -314,13 +315,12 @@ We'll first need a bucket to store our AWS Lambda source code in AWS.
 
 #### High-level Instructions
 
-Go ahead and create a bucket using the AWS Console or the CLI. S3 bucket names must be
+Go ahead and create a bucket for each region using the AWS Console or the CLI. S3 bucket names must be
 globally unique so choose a name for your bucket using something unique to you such as
 your name e.g. `wildrydes-firstname-lastname`. If you get an error that your bucket name
 already exists, try adding additional numbers or characters until you find an unused name.
 
 You can create a bucket using the CLI with the following command:
-
 
 *Ireland Bucket* (choose a unique bucket name)
      aws s3 mb s3://wildrydes-multiregion-firstname-lastname-eu-west-1 --region eu-west-1
@@ -353,10 +353,12 @@ You can do this using the following CLI command. Note that you must replace
     --output-template-file wild-rydes-api-output.yaml \
     --s3-bucket [Ireland bucket_name_you_created_above]
 
+<!--
 **IMPORTANT** DO NOT deploy any resources to Singapore during your initial pass
 on Module 1. You will come back in Module 3 and then deploy the same components
 to Singapore. We are providing the commands for both regions here for your
 convenience.
+-->
 
 *Singapore* 
 
@@ -375,7 +377,7 @@ Next, we need to spin up the resources needed to run our code and expose it as a
 
 #### High-level instructions
 
-You can now take the newly generated template and use it to create resources in AWS.
+You can now take the newly generated templates and use them to create resources in AWS.
 Go ahead and run the following CLI command:
 
 *Ireland*
@@ -386,10 +388,12 @@ Go ahead and run the following CLI command:
     --stack-name wild-rydes-api \
     --capabilities CAPABILITY_IAM
 
+<!--
 **IMPORTANT** DO NOT deploy any resources to Singapore during your initial pass
 on Module 1. You will come back in Module 3 and then deploy the same components
 to Singapore. We are providing the commands for both regions here for your
 convenience.
+-->
 
 *Singapore* 
 
