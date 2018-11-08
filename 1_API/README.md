@@ -56,7 +56,7 @@ to avoid validation errors when you paste the *JSON* into the AWS Console.
 
 Click on **Review Policy**
 
-Name your policy `TicketGetPolicy` and click **Create policy**
+Name your policy `TicketGetPolicy` and click **Create policy**.
 
 ![Create Policy Editor](images/create-policy-2.png)
 
@@ -81,11 +81,11 @@ select **Next: Permissions**.
 ![Choose Role Type](images/create-role-lambda.png)
 
 Find the `TicketGetPolicy` policy you just created on the next screen
-and select **Next: Review** (Hint: Use the *Customer Managed* filter)
+and select **Next: Review** (Hint: Use the *Customer Managed* filter).
 
 ![Select Policy to Role](images/create-role-select-policy.png)
 
-On the next screen, enter `TicketGetRole` for the Role Name and select **Create role**
+On the next screen, enter `TicketGetRole` for the Role Name and select **Create role**.
 
 ![Choose Role Final](images/create-role-final.png)
 
@@ -136,30 +136,28 @@ That's all that is required for now to set up the table.
 
 Next, you will create three Lambda functions. First, navigate to **Lambda** in
 the console (again ensuring you are still in the correct region - Ireland) and click
-**Create a function**
+**Create a function**.
 
 ![Create Lambda function](images/create-lambda-function.png)
 
-Next select “Author from scratch”
+Next select “Author from scratch”.
 
 ![Lambda author from scratch](images/lambda-author-scratch.png)
 
 Name your first function `TicketGetFunction` and assign the role with the **matching**
-name you created previously to it and click **Create function**
+name you created previously to it and click **Create function**. 
 
 On the next screen, ensure the runtime is `Node.js 6.10`.  If it isn’t, simply
-select it.
-
-For the Handler, enter `tickets-get.handler`, and modify the `index.js` name to `tickets-get.js` 
+select it. For the Handler, enter `tickets-get.handler`, and modify the `index.js` name to `tickets-get.js` 
 using Rename. Then paste the following code into the
 editor you see on your screen:
 
 [TicketGetFunction](tickets-get.js)
 
-Next, under `Environment Variables`, enter the key **TABLE_NAME** and the value **SXRTickets**
+Next, under `Environment Variables`, enter the key **TABLE_NAME** and the value **SXRTickets**.
 
 *Note that entering these Environment Variables exactly as shown is very important -
-your function will not work - case matters*
+your function will not work - case matters.*
 
 ![Create Lambda Wild Rydes Get](images/create-lambda-ticket-get2.png)
 
@@ -186,21 +184,21 @@ In the console, under Application Services, open Amazon API Gateway and click on
 ![Create Example API](images/create-example-api.png)
 
 Select **New API** and enter the API Name of `wild-rydes-api` and choose the
-Endpoint Type of *Regional* and then click **Create API**
+Endpoint Type of *Regional* and then click **Create API**.
 
 ![Create new API](images/create-new-api.png)
 
 Next, from the *Actions* drop-down, choose **Create Resource** and name the resource
-`ticket` and select the *Enable API Gateway CORS* option and then click **Create Resource**
+`ticket` and select the *Enable API Gateway CORS* option and then click **Create Resource**.
 
 ![Create api child CORS](images/api-child-resource-cors.png)
 
 Repeat the same steps one more time, this time creating the resource `health`.
-Ensure this resource is at the same level (directly below the root) as `ticket`
+Ensure this resource is at the same level (directly below the root) as `ticket`.
 
 ![ticket and heath visual](images/api-ticket-health.png)
 
-Next we will create two methods – one for GET and one for POST
+Next we will create two methods – one for GET and one for POST. 
 
 Select `ticket` under *resources*, and from the *Actions* drop-down select
 **Create Method** and then choose `GET` as your first method and select the
@@ -210,11 +208,11 @@ check-box to confirm creation:
 
 Keep *Lambda Function* selected, enable *Use Lambda Proxy Integration* and choose
 `eu-west-1` as the Lambda Region and then start typing in the Lambda Function box
-and choose *TicketGetFunction* and then click **Save**
+and choose *TicketGetFunction* and then click **Save**.
 
 ![Setup api method get](images/api-method-get-setup.png)
 
-Click OK when asked to *Add Permission to Lambda Function*
+Click OK when asked to *Add Permission to Lambda Function*.
 
 ![api lambda permission](images/api-lambda-permission.png)
 
@@ -226,10 +224,10 @@ the *SXRHealthCheckFunction* for the Lambda function.
 
 ![Setup api method health get post](images/api-method-health-get-setup.png)
 
-Again, click **OK** when asked to *Add Permission to Lambda Function*
+Again, click **OK** when asked to *Add Permission to Lambda Function*.
 
 Finally, we will enable Cross-Origin.
-Select `ticket` under *resources*, and from the *Actions* drop-down select **Enable CORS**
+Select `ticket` under *resources*, and from the *Actions* drop-down select **Enable CORS**.
 
 ![actions enable cors apigw](images/actions-enable-cors.png)
 
@@ -242,7 +240,7 @@ Click **Yes, replace existing values** if prompted.
 
 Repeat the same step once more time, this time choosing `health` as the resource.
 
-Next we will deploy the API – this is done from the *Actions* pull-down, selecting *Deploy API*
+Next we will deploy the API – this is done from the *Actions* pull-down, selecting *Deploy API*.
 
 ![deploy api to prod](images/deploy-api-prod.png)
 
@@ -256,7 +254,7 @@ problems later on.
 
 While still in API Gateway, select **Stages** from the left menu under your
 API Endpoint.  Next, expand "prod", and select `POST` or `GET` from the *ticket*
-resource (either choice will provide the same API URL)
+resource (either choice will provide the same API URL).
 
 ![Test the API Gateway EndPoint](images/test-api-gateway-endpoint.png)
 
