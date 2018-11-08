@@ -126,17 +126,13 @@ own domain via Route 53.
    covered by this certificate
 5. Select **DNS validation** and click **Review**. Confirm both domains are configured and
    select **Confirm and request**
-6. In the Validation screen, write down the **CNAME** and **Value**. It should be added at 
-**Record Set** in **Route 53**
-// add picture
-
-7. Go to **Route 53** service page, and select the Domain Name that you created in **Hosted zones**.
-8. Confirm your Domain Name and click **Create Record Set**. Type the name (ex.d9adda5310e966972278ac904b34446c) that you copied from ACM in **Name** field, select **CNAME** type, change the TTL to **60**, and add value (ex.a01ddf21e30afcd1076a0f2262621d44.tljzshvwok.acm-validations.aws.) that you copied from ACM in **Value** field. Then **Save Record Set**. It will take about 10mins, so you can keep the next steps first.<!-- 6. A validation email will be sent to the email address configured for the domain. Ensure that you received this email and click the validation link before moving on. Now click **Continue** (it is also possible to use DNS validation to issue the certificate as well - follow the instructions onthe screen if you choose/need to validate this way) -->
-9. Repeat steps 2-5 again in your second region, (Singapore, ap-southeast-1). The CNAME and Value are the same for the validation, so it will be automatically issued when the Ireland certification is confirmed.
-10. Once you have confirmed your certificate, it will appear as `Issued` in
+6. In the Validation screen, click **Create record in Route53**. The DNS records(CNAME and Value) was writen to your Route53 hosted zone.
+![ACM Certificate request](images/acm-certification1.png)
+7. Go to **Route 53** service console, and select the Domain Name that you created in **Hosted zones**. Confirm your Domain Name and the DNS records of certificate are created in the Record Set. Change the TTL to **60**, and click the **Save Record Set**. It will take about 10 mins, so you can keep the next steps first.<!-- 6. A validation email will be sent to the email address configured for the domain. Ensure that you received this email and click the validation link before moving on. Now click **Continue** (it is also possible to use DNS validation to issue the certificate as well - follow the instructions onthe screen if you choose/need to validate this way) -->
+8. Repeat steps 2-5 again in your second region (Singapore). As the CNAME and Value of certificates are the same, hense, it will be automatically issued when the Ireland certification is confirmed.
+9. Once the certificate validation is confirmed, it will appear as `Issued` in
 your list of certificates.
-
-// add picture
+![ACM Certificate issued](images/acm-certification2.png)
 
 ### 2.2 Configure custom domains on each API in each region
 
