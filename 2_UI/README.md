@@ -2,7 +2,7 @@
 
 Now that we have a working API, let's deploy a UI that can expose this
 functionality to our users.  Note that we will only deploy this UI in our *Primary*
-region.  We don't attempt to address failing over a full web application in this
+region (Ireland).  We don't attempt to address failing over a full web application in this
 workshop.  Our failover efforts are focused on the backend API components deployed
 in the first module.
 
@@ -11,15 +11,13 @@ Navigate to the `2_UI/cfn` folder in your local Git repository.
 ## 1. Create the AWS Cognito Identity Pool, S3 bucket and Cloudfront distribution
 
 Our first task is to setup AWS Cognito to allow our UI application to
-authenticate users and gain access credentials to allow our UI to call the
-API. As in *Module 1*, a CloudFormation template is available to create all the
-necessary resources for us. This template does not rely on any local code so
-no package step is needed.
+authenticate users and gain permission to call the API. As in *Module 1*, a CloudFormation template is available to create all the
+necessary resources for us.
 
-For time reasons we are not proving console instructions for this section.  Do
+For time reasons we are not providing console instructions for this section.  Do
 feel free to review the CloudFormation template to see what is being created.
 
-You can go ahead and deploy this template in the primary region using the `aws
+You can go ahead and deploy this template in the primary region (Ireland) using the `aws
 cloudformation deploy` CLI command as before.
 
 For the Ireland region, the full command will look like:
@@ -45,7 +43,7 @@ Take note of the values for each of these, you will need them in the next steps.
 ![bucket-name](images/s3bucket-name.png)
 
 #### Cloudfront distribution for S3 bucket
-Next, we need to create a Cloudfront distribution for our S3 bucket - `BucketName` : 
+Next, we need to create a Cloudfront distribution for the S3 bucket that we created above (Step 1):
 
     aws cloudformation deploy \
     --region eu-west-1 \
@@ -57,9 +55,7 @@ Note that you must replace `[bucket-name]` in this command with the `BucketName`
 
 ## 2. Configure Federated Identities with Cognito
 
-Now we'll set up our login with Facebook capability. You will need to set up a
-Facebook Web Application so that your riders can log in
-to the UI and submit their Unicorn issues.
+Now we'll set up our login with Facebook capability, this allows any Facebook users to login to our application. 
 
 Go into your Facebook Developer account and create an new application by
 [following these steps](https://developers.facebook.com/apps/).
@@ -68,9 +64,9 @@ Click on **Add a New App** in the upper right corner:
 
 ![Add new FB app](images/facebook-add-app2.png)
 
-Name your App anything you would like, and then click **Create App ID**
+Name your App anything you would like, and then click **Create App ID**.
 
-Once you have created your App, you will need to select *Settings* -> *Basic* from the left menu: 
+Once you have created your App, you will need to select *Settings* -> *Basic* from the left menu.
 
 <!-- ![FB Select Settings](images/facebook-select-settings.png) -->
 
@@ -95,7 +91,7 @@ in the next step as well as when you build the website code in the next section.
 Next, we must configure the Cognito Identity Pool to use Facebook as our
 identity provider. To do this, open up the AWS Console in your browser and
 navigate to Cognito from the menu. Double check that you are still in the
-primary region (EU Ireland).
+primary region (Ireland).
 
 1. Choose **Manage Identities Pools** and select the `SXRIdentityPool`.
 2. Click the **Edit Identity Pool** button in the top right
@@ -110,13 +106,11 @@ primary region (EU Ireland).
 
 Our application will need to know the location of the API in order to push and
 pull data from it. In addition, the application will need to know our Facebook
-App ID and Cognito Identity Pool ID so it can authenticate our users. See the
-Prerequisites section at the beginning of this guide if you have not already
-setup your Facebook Developer account and App ID.
+App ID and Cognito Identity Pool ID so it can authenticate our users. 
 
 All of these attributes must be configured in
-`2_UI/src/environments/environment.ts`. Open it at Cloud9 and edit
-this file before moving on. Please be sure to address all of the parameters the file
+`2_UI/src/environments/environment.ts`. Open this file inside AWS Cloud9 and edit
+this file. Please be sure to address all of the parameters the file
 requires or you will fail.  If you used the console instructions to deploy Module 1,
 then you can obtain the API Gateway Endpoint using the same method you used when you
 tested at the end of the previous module.  Ensure you do *NOT* append `ticket` to
@@ -143,7 +137,7 @@ have created your dev instance build your project by executing the following: --
 - build your app with by running `npm run build`
 
 If you get an error about NPM command not found, then go back and check the
-prerequisites section of the README to find instructions to install NPM.
+[prerequisites section of the README](../README_Cloud9.md) to find instructions to install NPM.
 
 This will produce a `dist/` folder containing the compiled application with your
 custom settings.
@@ -160,7 +154,7 @@ Note that you must replace `[bucket-name]` in this command with the bucket
 name output from the CloudFormation stack in step 1.
 
 #### Update Facebook App setting
-Navigate back to Facebook App setting, update "App Domains" and "Privacy Policy URL" with the Cloudfront URL. Select a category (Education might be a good choice). Toggle on the "Off" button at the top right corner to make the App public.
+Navigate back to Facebook App setting, update "App Domains" and "Privacy Policy URL" with the Cloudfront URL. Select any category (Example: Education). Toggle on the "Off" button at the top right corner to make the App public.
 
 ![FB Make Public](images/facebook-make-public2.png)
 
@@ -178,7 +172,6 @@ code to your S3 bucket again.
 ## Completion
 
 Congratulations! You have successfully deployed a user interface for our users
-on S3. In the next module you will learn how to replicate this app to a second
-region and configure automatic failover using Route53.
+on S3. In the next module you will learn how to configure active/active using Route53.
 
 Module 3: [Configure Active-Active Route53](../3_Route53/README.md)
