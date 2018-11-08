@@ -57,7 +57,7 @@ purchase.
    verification before proceeding.
 7. Click **Complete Purchase**
 
-//add a picture
+![Route 53 Domain Registeration](images/route53-domain-registeration.png)
 
 It will take around 10 mins to register your domain. You will configure a certificate in
 AWS Certificate Manager and a health check in Route53 later. 
@@ -128,13 +128,15 @@ own domain via Route 53.
    select **Confirm and request**
 6. In the Validation screen, write down the **CNAME** and **Value**. It should be added at 
 **Record Set** in **Route 53**
+// add picture
+
 7. Go to **Route 53** service page, and select the Domain Name that you created in **Hosted zones**.
 8. Confirm your Domain Name and click **Create Record Set**. Type the name (ex.d9adda5310e966972278ac904b34446c) that you copied from ACM in **Name** field, select **CNAME** type, change the TTL to **60**, and add value (ex.a01ddf21e30afcd1076a0f2262621d44.tljzshvwok.acm-validations.aws.) that you copied from ACM in **Value** field. Then **Save Record Set**. It will take about 10mins, so you can keep the next steps first.<!-- 6. A validation email will be sent to the email address configured for the domain. Ensure that you received this email and click the validation link before moving on. Now click **Continue** (it is also possible to use DNS validation to issue the certificate as well - follow the instructions onthe screen if you choose/need to validate this way) -->
 9. Repeat steps 2-5 again in your second region, (Singapore, ap-southeast-1). The CNAME and Value are the same for the validation, so it will be automatically issued when the Ireland certification is confirmed.
 10. Once you have confirmed your certificate, it will appear as `Issued` in
 your list of certificates.
 
-//add picture
+// add picture
 
 ### 2.2 Configure custom domains on each API in each region
 
