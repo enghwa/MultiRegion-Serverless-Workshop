@@ -6,21 +6,18 @@ primary region and observe our failover in action.
 
 To demonstrate this we will replicate a scenario where a developer
 accidentally deploys incorrect code to the health check endpoint in the
-primary region, thus breaking it. We will expect our application to detect
+primary region (Ireland), thus breaking it. We will expect our application to detect
 this failure and adjust the DNS settings to continue service of the
-application (and the unchanged health check) from the second region
+application (and the unchanged health check) from the second region (Singapore)
 maintaining availability of the API and functionality of the UI.
 
 ## Breaking the primary region
 
-In the AWS Console, ensure you are in your primary region then head over to
+In the AWS Console, ensure you are in your primary region (Ireland) then head over to
 **API Gateway**, choose your API and select the `GET` method of the `/health`
 endpoint. Under **Integration Request** change the associated Lambda function
-to instead be your *TicketPostFunction*. Click the tick next to it to save the
-change. This function expects to be called with a JSON body containing new
-ticket information however when triggered by the health endpoint it will not
-have this and will fail and return an error code, causing the health check to
-fail.
+to instead be your *TicketPostFunction*. Click the tick icon next to it to save the
+change. This function expects to be called with a JSON body containing new ticket information however when triggered by the health endpoint it will fail and return an error code, causing the health check to fail.
 
 ![Break api](images/break-api.png)
 
@@ -52,8 +49,9 @@ Don't forget to switch your API Gateway configuration back to the
 ## Completion
 
 Congratulations! You have now setup and verified an API that fails over from
-one region to another automatically in the event of a disaster. Wild Rydes
-users are going to love this!
+one region to another automatically in the event of a disaster.
+
+To prevent further AWS charges, please clean-up the AWS resources created in this workshop by following the [steps here.](5_Cleanup/README.md)
 
 The application you have built includes many components that you would need to
 build your own Serverless applications in AWS including [AWS
@@ -63,5 +61,3 @@ Gateway](https://aws.amazon.com/apigateway) for exposing an HTTP interface and
 [DynamoDB](https://aws.amazon.com/dynamodb) for storing application data. A
 good next step would be to start modifying this application to add your own
 features and explore these services further.
-
-Want to read this over again? [Go back to the beginning](../README.md)
