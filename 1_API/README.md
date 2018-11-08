@@ -132,7 +132,7 @@ replicated in multiple regions.
 
 That's all that is required for now to set up the table.
 
-## 3. Create three Lambda functions (#section3)
+## 3. [Create three Lambda functions](#section3)
 
 Next, you will create three Lambda functions. First, navigate to **Lambda** in
 the console (again ensuring you are still in the correct region - Ireland) and click
