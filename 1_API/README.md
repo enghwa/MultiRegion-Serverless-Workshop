@@ -132,7 +132,7 @@ replicated in multiple regions.
 
 That's all that is required for now to set up the table.
 
-## 3. Create three Lambda functions
+## 3. Create three Lambda functions (#section3)
 
 Next, you will create three Lambda functions. First, navigate to **Lambda** in
 the console (again ensuring you are still in the correct region - Ireland) and click
@@ -276,7 +276,7 @@ instead.  You should get something like the following in your browser:
 Make note of the API Endpoint URL - you will need this in Module 2_UI.
 
 You have now completed the setup of all the API and backend components needed for
-your primary region. Go to **Singapore** and create the same **three Lambda Functions (## 3.) 
+your primary region. Go to **Singapore** region and create the same **three Lambda Functions ([## 3.](#section3)) 
 and API Gateway Endpoint (## 4.)**.
 
 </details>
