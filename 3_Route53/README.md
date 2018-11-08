@@ -1,9 +1,10 @@
 <!-- # Replicate to a second region --> 
 # Configure Active-Active Route53
 
-Now that we have the app set up, lets configure Route53 for active-active multi-region solution. 
+Now that we have the app set up, let's configure Route53 for active-active multi-region solution. 
+<!-- 
 For this workshop, we replicated the API layer on both regions, but leaving the UI in a single region (Ireland).
-<!-- replicate this in a second region so we
+replicate this in a second region so we
 have something to failover to. For this workshop, we will focus on the API
 layer down, leaving the UI in a single region. --> 
 
@@ -20,7 +21,7 @@ recently. See http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 
 ### 1.1 Purchase (or repurpose) your own domain
 
-In this step, you will provision your own domain name to use for this
+In this step, you will provision your own domain name for this
 application. If you already have a domain name registered with Route53 and
 would like to use this you can use skip to the next step.  It is also possible
 to delegate DNS for a domain you own with another registrar to Route53 - simply
@@ -56,8 +57,9 @@ purchase.
    verification before proceeding.
 7. Click **Complete Purchase**
 
-It will take around 10 mins to register your domain, and you can keep going the next steps
-(2. replicate API stack and 3. replicate data) first. You will configure a certificate in
+//add a picture
+
+It will take around 10 mins to register your domain. You will configure a certificate in
 AWS Certificate Manager and a health check in Route53 later. 
 
 For the remainder of this workshop we will use `example.com` as to
@@ -122,22 +124,19 @@ own domain via Route 53.
    access your site using subdomains. Add both `example.com` and
    `*.example.com`. The `*` acts as a wildcard allowing any subdomain to be
    covered by this certificate
-5. Select ** DNS validation ** and click **Review**. Confirm both domains are configured and
+5. Select **DNS validation** and click **Review**. Confirm both domains are configured and
    select **Confirm and request**
 6. In the Validation screen, write down the **CNAME** and **Value**. It should be added at 
 **Record Set** in **Route 53**
 7. Go to **Route 53** service page, and select the Domain Name that you created in **Hosted zones**.
-8. Confirm your Domain Name and click **Create Record Set**. Type the name (ex.d9adda5310e966972278ac904b34446c) that you copied from ACM in **Name** field, select **CNAME** type, change the TTL to **60**, and add value (ex.a01ddf21e30afcd1076a0f2262621d44.tljzshvwok.acm-validations.aws.) that you copied from ACM in **Value** field. Then **Save Record Set**. It will take about 10mins, so you can keep the next steps first.
-<!-- 6. A validation email will be sent to the email address configured for the
-   domain. Ensure that you received this email and click the validation link
-   before moving on. Now click **Continue** (it is also possible to use DNS
-   validation to issue the certificate as well - follow the instructions on
-   the screen if you choose/need to validate this way) -->
-9. Repeat steps 2-5 again in your second region, ap-southeast-1. The CNAME and Value are the same for the validation, so it will be automatically issued when the Ireland certification is confirmed.
+8. Confirm your Domain Name and click **Create Record Set**. Type the name (ex.d9adda5310e966972278ac904b34446c) that you copied from ACM in **Name** field, select **CNAME** type, change the TTL to **60**, and add value (ex.a01ddf21e30afcd1076a0f2262621d44.tljzshvwok.acm-validations.aws.) that you copied from ACM in **Value** field. Then **Save Record Set**. It will take about 10mins, so you can keep the next steps first.<!-- 6. A validation email will be sent to the email address configured for the domain. Ensure that you received this email and click the validation link before moving on. Now click **Continue** (it is also possible to use DNS validation to issue the certificate as well - follow the instructions onthe screen if you choose/need to validate this way) -->
+9. Repeat steps 2-5 again in your second region, (Singapore, ap-southeast-1). The CNAME and Value are the same for the validation, so it will be automatically issued when the Ireland certification is confirmed.
 10. Once you have confirmed your certificate, it will appear as `Issued` in
 your list of certificates.
 
-### 2.2 Configure custom domains on each API, in each region
+//add picture
+
+### 2.2 Configure custom domains on each API in each region
 
 Now that you have a domain name and a valid certificate for it, you can go
 ahead and setup your APIs for each region to use your custom domain. API
@@ -169,7 +168,12 @@ limits, wait a minute before attempting to create again.
 
 ![Custom API Gateway domain](images/custom-domain.png)
 
-Now repeat for the three other subdomains in the respective regions.
+Now repeat the process for :
+**Ireland**
+    * `ireland.example.com`
+**Singapore**
+    * `api.example.com`
+    * `singapore.example.com`
 
 Your newly-created Custom Domains will each show a Target Domain Name. You
 will use this to configure your health checks and DNS records next. The final
@@ -183,12 +187,12 @@ configuration for the Ireland region should look similar to the below image.
 
 Now let's start pointing your domain name at the API endpoints. In this step
 you will configure CNAME records for your `ireland.` and `singapore.`
-subdomains. We will not configure `api.` just yet.
+subdomains.
 
 #### High-level instructions
 
-Make sure you are in your primary (Ireland) region. Head over to the
-**Route53** service and select **Hosted zones**. Choose your domain name from
+<!--Make sure you are in your primary (Ireland) region.-->
+Head over to the **Route53** service and select **Hosted zones**. Choose your domain name from
 the list and you should see a couple of records already configured for
 nameservers.
 
@@ -210,22 +214,20 @@ ensure that you see a successful response.
 
 This endpoint should return the region it is running in so you can also
 confirm that this response region matches up with the domain you have
-configured. Notice how we're explicitly using HTTPS. You will get a gateway
-error if you try to use HTTP. It may take a few minutes for your records to
-become active so check back later if you do not get a response as this must
-work in order for your health check to function.
+configured. Notice how we're explicitly using HTTPS. It may take a few minutes for your records to
+become active so check back later if you do not get a response.
 
 ### 3.2 Configure a health check for both regions
 
-In this step you will configure a Route53 health check on the primary
-(Ireland) regional endpoint. This health check will be responsible for
-triggering a failover to the second region if a problem is detected in the
-primary region.
+In this step you will configure a Route53 health check on both
+(Ireland, Singapore) regional endpoints. This health check will be responsible for
+triggering a failover between the 2 regions if a problem is detected in the
+one region.
 
-Note that if you were configuring an active-active model with something like
+<!--Note that if you were configuring an active-active model with something like
 Weighted Routing then you would configure a health check on all endpoints, but
 only one is necessary in this case since only our primary region will be
-handling traffic under normal conditions.
+handling traffic under normal conditions.-->
 
 #### High-level instructions
 
@@ -271,10 +273,9 @@ being managed by a traffic policy.
 
 #### High-level instructions
 
-Ensure you are in your primary (Ireland) region. Navigate over to the
-**Route53** service and choose **Hosted zones**. Choose the zone for your
+Navigate over to the **Route53** service and choose **Hosted zones**. Choose the zone for your
 domain and select **Create Record Set**. Enter `api` as the name and choose
-CNAME as the type. Now change Alias to Yes and select the `ireland.` prefixed
+CNAME as the type. Now change Alias to `Yes` and select the `ireland.` prefixed
 version of your domain. Since this is an alias, it should appear in the
 dropdown list.
 
