@@ -327,7 +327,7 @@ Let's create 2 buckets using the CLI with the following command:
 
 ## 2. Package up the API code and push to S3
 
-Because this is a (Serverless Application Model Template)[https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html], we must first package it. This process will upload the source code to our S3 bucket and generate a new template referencing the code in S3 where it can be used by AWS Lambda.
+Because this is a [Serverless Application Model Template](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html), we must first package it. This process will upload the source code to our S3 bucket and generate a new template referencing the code in S3 where it can be used by AWS Lambda.
 
 #### High-level instructions
 
