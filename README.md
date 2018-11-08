@@ -65,7 +65,7 @@ Using the two regions above for this workshop is mandatory.  We will start with
 `eu-west-1` (Ireland) and then `ap-southeast-1` (Singapore). 
 
 ### Modules
-
+0. [Create AWS Cloud9 Environment](README_Cloud9.md)
 1. [Build an API layer](1_API/README.md)
 2. [Build a UI layer](2_UI/README.md)
 3. [Replicate to a second region](3_Replication/README.md)
