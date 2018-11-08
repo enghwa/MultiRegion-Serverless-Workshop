@@ -24,10 +24,10 @@ If you used CloudFormation to deploy a 1_API regions
 
 - In the Console, go into S3, and *Empty* but don't delete the bucket hosting
   your website content
-- Select the web-ui-stack stack and then *delete* it.
+- Go to `CloudFormation` console, Select the web-ui-stack stack and then *delete* it.
 - The template will be deleted along with all resources it created
 
-### Module 3_Replication
+### Module 3_Route53
 
 - In Route53, remove the Health Check as well as all DNS entries you created
   during the workshop
