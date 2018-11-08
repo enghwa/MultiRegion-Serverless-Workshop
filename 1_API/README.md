@@ -116,7 +116,7 @@ and will be the prototype for other replica tables that you add later.
 Choose the **Global Tables** tab, and then choose **Enable streams**. Leave 
 the View type at its default value (New and old images). 
 
-![DymamoDB Global Table Create](images/dynamodb-create-globaltable.png)
+![DymamoDB Global Table Create](images/dynamodb-create-globaltable2.png)
 
 Choose **Add region**, and then choose another region where you want to 
 deploy another replica table. In this case, choose **Asia Pacific (Singapore)**, 
