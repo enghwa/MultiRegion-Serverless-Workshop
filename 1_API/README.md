@@ -1,8 +1,8 @@
 # Building the Wild Rydes Backend Components Layer
 
-In this module, you will deploy backend application components to AWS. These
-backend components include several AWS Lambda functions, two API Gateway Endpoints and
-DynamoDB Global Tables. You will also create the IAM polices and roles required by
+In this module, you will deploy backend application components to 2 AWS Regions (Ireland and Singapore). These
+backend components include 3 AWS Lambda functions, 2 API Gateway Endpoints and
+DynamoDB Global Table per Region. You will also create the IAM polices and roles required by
 these components.
 
 There are two ways to complete this module, *Console step-by-step
@@ -44,7 +44,7 @@ Let’s go ahead and create all the needed polices and roles for our workshop.
 Because IAM roles and policies are global in nature, you only need to do this once.
  
 Log into the AWS Console then select the **IAM** service. Now select
-**Policies** from the left and click on the **Create policy** button.  Then
+**Policies** from the left and click on the **Create policy** button. Then
 select the *JSON* tab and paste the code below into the editing window.
 
 Download policy: [TicketGetPolicy](wild-rydes-dynamodb-get.json)
@@ -100,7 +100,7 @@ in the upper right corner of the console. <!-- If
 you mistakenly create the DynamoDB table in the wrong region, the application
 will not work. --> 
 
-In the console, open **DynamoDB** (it can be found under Database).  Select
+In the console, open **DynamoDB** (it can be found under Database section).  Select
 **Create Table**. Your screen may be slightly different depending on whether
 this is your first DynamoDB table in this region or not.
 
@@ -147,9 +147,7 @@ Next select “Author from scratch”.
 Name your first function `TicketGetFunction` and assign the role with the **matching**
 name you created previously to it and click **Create function**. 
 
-On the next screen, ensure the runtime is `Node.js 6.10`.  If it isn’t, simply
-select it. For the Handler, enter `tickets-get.handler`, and modify the `index.js` name to `tickets-get.js` 
-using Rename. Then paste the following code into the
+On the next screen, ensure the runtime is `Node.js 6.10`. For the Handler, enter `tickets-get.handler`, and modify the `index.js` name to `tickets-get.js` using Rename by right-clicking on `index.js`. Then paste the following code into the
 editor you see on your screen:
 
 [TicketGetFunction](tickets-get.js)
@@ -276,7 +274,7 @@ instead.  You should get something like the following in your browser:
 Make note of the API Endpoint URL - you will need this in Module 2_UI.
 
 You have now completed the setup of all the API and backend components needed for
-your primary region. Go to **Singapore** region and create the same **three Lambda Functions (## 3.) 
+your primary region (Ireland). Go to **Singapore** region and create the same **three Lambda Functions (## 3.) 
 and API Gateway Endpoint (## 4.)**.
 
 </details>
@@ -313,35 +311,29 @@ We'll first need a bucket to store our AWS Lambda source code in AWS.
 
 #### High-level Instructions
 
-Go ahead and create a bucket for each region using the AWS Console or the CLI. S3 bucket names must be
+Go ahead and create a bucket for each region using the CLI. S3 bucket names must be
 globally unique so choose a name for your bucket using something unique to you such as
-your name e.g. `wildrydes-firstname-lastname`. If you get an error that your bucket name
-already exists, try adding additional numbers or characters until you find an unused name.
+your name e.g. `wildrydes-firstname-lastname`.
 
-You can create a bucket using the CLI with the following command:
+Let's create 2 buckets using the CLI with the following command:
 
 *Ireland Bucket* (choose a unique bucket name)
+     
      aws s3 mb s3://wildrydes-multiregion-firstname-lastname-eu-west-1 --region eu-west-1
-*Singapore Bucket*
-     aws s3 mb s3://wildrydes-multiregion-firstname-lastname-ap-southeast-1 --region ap-southeast-1
 
-Note that in this and in the following CLI commands, we are explicitly passing in the
-region. Like many things in AWS, S3 buckets are regional. If you do not specify a region,
-a default will be used which may not be what you want.
+*Singapore Bucket*
+     
+     aws s3 mb s3://wildrydes-multiregion-firstname-lastname-ap-southeast-1 --region ap-southeast-1
 
 ## 2. Package up the API code and push to S3
 
-Because this is a SAM Template, we must first package it. This process will upload the
-source code to our S3 bucket and generate a new template referencing the code in S3
-where it can be used by AWS Lambda.
+Because this is a (Serverless Application Model Template)[https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html], we must first package it. This process will upload the source code to our S3 bucket and generate a new template referencing the code in S3 where it can be used by AWS Lambda.
 
 #### High-level instructions
 
-Go ahead and create two new Lambda functions using the the Node.js code from
-`tickets-post.js` and `tickets-get.js`.
-
+Go ahead and create two SAM deployment package in Ireland and Singapore regions respectively.
 You can do this using the following CLI command. Note that you must replace
-`[bucket-name]` in this command with the bucket you just created):
+`[bucket-name]` in this command with the bucket you just created:
 
 *Ireland*
 
@@ -375,7 +367,7 @@ Next, we need to spin up the resources needed to run our code and expose it as a
 
 #### High-level instructions
 
-You can now take the newly generated templates and use them to create resources in AWS.
+You can now take the newly generated Cloudformation templates (`wild-rydes-api-output.yaml` for Ireland and `wild-rydes-api-output-ap-southeast-1.yaml` for Singapore) and use them to create resources in AWS.
 Go ahead and run the following CLI command:
 
 *Ireland*
@@ -402,14 +394,12 @@ convenience.
     --capabilities CAPABILITY_IAM
 
 
-This command may take a few minutes to run. In this time you can hop over to the console
-and watch all of the resources being created for you. Open up the AWS Console in your browser
-and check you are in the respective regions (EU Ireland or Asia Pacific Singapore) before selecting the CloudFormation
-service from the menu. You should check your stack listed as `wild-rydes-api`. You can click
-on this stack to see all of the resources it created.
+This command may take a few minutes to run. In this time you can hop over to the AWS console
+and watch all of the resources being created for you in CloudFormation. Open up the AWS Console in your browser
+and check you are in the respective regions (EU Ireland or Asia Pacific. You should check your stack listed as `wild-rydes-api`. 
 
 Once your stack has successfully completed, navigate to the Outputs tab of your stack
-where you will find an API URL. Take note of this URL as we will need it later to configure
+where you will find an `API URL`. Take note of this URL as we will need it later to configure
 the website UI in the next module.
 
 You can also take a look at some of the other resources created by this template. Under
@@ -419,12 +409,12 @@ our `TicketGetFunction` Lambda function and the `POST` method calling our `Ticke
 Lambda function. You can also see that an empty DynamoDB table was set up as well as IAM
 roles to allow our functions to speak to DynamoDB.
 
-Now, you can confirm that your API is working by copying your API URL and appending `/ticket`
+Now, you can confirm that your API is working by copying your `API URL` and appending `/ticket`
 to it before navigating to it into your browser. It should return the following:
 
     {"Items":[],"Count":0,"ScannedCount":0}
 
-You can also run the health check by copying your API URL and appending `/health`
+You can also run the health check by copying your `API URL` and appending `/health`
 to it before navigating to it into your browser. It should return the following:
 
     {
@@ -443,6 +433,7 @@ to the '2. Create the DynamoDB Global Table' section under 'Console step-by-step
 Follow the steps to create a global table (SXRTickets) consisting of replica tables in the Ireland and 
 Singapore regions using the AWS CLI. 
 
+<!--
 *Enable Streaming on DynamoDB*
 _Ireland_
 
@@ -455,7 +446,7 @@ _Singapore_
     aws dynamodb update-table --table-name SXRTickets \
     --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
     --region ap-southeast-1
-
+-->
 
 *Enable DynamoDB Global Table between Ireland and Singapore*
 
