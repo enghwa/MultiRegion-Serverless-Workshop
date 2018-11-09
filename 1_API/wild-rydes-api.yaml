@@ -180,7 +180,6 @@ Resources:
        ReadCapacityUnits: 5
        WriteCapacityUnits: 5
      StreamSpecification:
-       StreamEnabled: true
        StreamViewType: NEW_AND_OLD_IMAGES
 
 Outputs:
