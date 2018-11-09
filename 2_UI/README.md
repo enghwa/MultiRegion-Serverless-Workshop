@@ -136,7 +136,7 @@ to build the application. You can follow instructions [Dev Instance
 Setup](../README_InstallDevDependencies.md) to set up a dev instance. Once you
 have created your dev instance build your project by executing the following: -->
 
-- navigate to the root folder of the ui project, i.e. 2_UI.
+- go to the root folder of the ui project, `cd /home/ec2-user/environment/MultiRegion-Serverless-Workshop/2_UI`
 - run `npm install` to install project dependencies
 - build your app with by running `npm run build`
 

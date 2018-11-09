@@ -118,7 +118,7 @@ own domain via Route 53.
 
 1. Ensure you are in your primary region, eu-west1.
 2. Navigate to the **Certificate Manager** service page
-3. Click **Request a certificate** and select **Request a public certificate**
+3. Click **Provision certificates** and select **Request a certificate** and **Request a public certificate**
 4. In this next step you will configure the domain name you just registered
    (or repurposed). You will want to add two domains to make sure you can
    access your site using subdomains. Add both `example.com` and
