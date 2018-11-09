@@ -65,7 +65,7 @@ Using the two regions above for this workshop is mandatory.  We will start with
 `eu-west-1` (Ireland) and then `ap-southeast-1` (Singapore). 
 
 ### Modules
-0. [Create AWS Cloud9 Environment](0_Cloud9/0_Cloud9_README.md)
+0. [Create AWS Cloud9 Environment](0_Cloud9/README.md)
 1. [Build an API layer](1_API/README.md)
 2. [Build a UI layer](2_UI/README.md)
 3. [Replicate to a second region](3_Replication/README.md)
@@ -111,4 +111,4 @@ website URL you will set up in Module 2.
 To complete parts of this workshop you'll need the AWS Command Line Interface
 (CLI). The front end application is written in AngularJS and requires node and npm. To avoid spending time on configuring your laptop, we will use [AWS Cloud9](https://aws.amazon.com/cloud9/) as our IDE. It has AWS CLI preconfigured.
 
-Follow the instruction [here to launch a AWS Cloud9 IDE](0_Cloud9/0_Cloud9_README.md) before we start the lab. Once you have AWS Cloud9 and `nodejs` installed, you can start the lab.
+Follow the instruction [here to launch a AWS Cloud9 IDE](0_Cloud9/README.md) before we start the lab. Once you have AWS Cloud9 and `nodejs` installed, you can start the lab.
