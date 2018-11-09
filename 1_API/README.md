@@ -421,6 +421,8 @@ For example:
     https://XXXXXX.execute-api.eu-west-1.amazonaws.com/prod/ticket
     https://XXXXXX.execute-api.ap-southeast-1.amazonaws.com/prod/ticket
 
+ It should return the following:
+
     {"Items":[],"Count":0,"ScannedCount":0}
 
 You can also run the health check by copying your `API URL` and appending `/health`
@@ -431,7 +433,7 @@ For example:
     https://XXXXX.execute-api.eu-west-1.amazonaws.com/prod/health
     https://XXXXX.execute-api.ap-southeast-1.amazonaws.com/prod/health
 
- It should return the following:
+ It should return the following (for Ireland):
 
     {
         "region":"eu-west-1",
