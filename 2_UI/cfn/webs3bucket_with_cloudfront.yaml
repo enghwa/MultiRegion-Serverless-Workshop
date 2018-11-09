@@ -46,8 +46,8 @@ Resources:
             Headers:
               - 'Origin'
             QueryString: false
-          MaxTTL: 360
-          MinTTL: 30
+          MaxTTL: 60
+          MinTTL: 0
           TargetOriginId: !Sub 's3-origin-${S3BucketName}'
           ViewerProtocolPolicy: 'redirect-to-https'
         DefaultRootObject: 'index.html'
