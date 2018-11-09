@@ -1,8 +1,6 @@
 # AWS Cloud9 - Cloud IDE
 
-
-
-Login to AWS Console, select *eu-west-1 Region* and spin up a AWS Cloud9 environment.
+Login to AWS Console, select *eu-west-1 Region* and spin up a AWS Cloud9 environment. Please use Firefox or Chrome to open AWS Cloud9. 
 
 https://eu-west-1.console.aws.amazon.com/cloud9/home?region=eu-west-1 
 
