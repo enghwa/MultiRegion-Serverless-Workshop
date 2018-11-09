@@ -20,7 +20,11 @@ feel free to review the CloudFormation template to see what is being created.
 You can go ahead and deploy this template in the primary region (Ireland) using the `aws
 cloudformation deploy` CLI command as before.
 
-For the Ireland region, the full command will look like:
+For the Ireland region, execute this command to enter the correct subdirectory:
+
+    cd /home/ec2-user/environment/MultiRegion-Serverless-Workshop/2_UI/cfn
+
+The full command will look like:
 
     aws cloudformation deploy \
     --region eu-west-1 \
@@ -51,7 +55,7 @@ Next, we need to create a Cloudfront distribution for the S3 bucket that we crea
     --stack-name ticket-service-ui-cloudfront \
     --parameter-overrides S3BucketName=[bucket-name]
 
-Note that you must replace `[bucket-name]` in this command with the `BucketName` output from the CloudFormation stack in step 1. . It typically takes about 15 minutes for the CloudFormation stack creation to finish. 
+Note that you must replace `[bucket-name]` in this command with the `BucketName` output from the CloudFormation stack in step 1. . It typically takes about 15 minutes for the CloudFormation stack creation to finish. You can move forward to configure Cognito and Facebook Developer ID.
 
 ## 2. Configure Federated Identities with Cognito
 

@@ -319,11 +319,11 @@ Let's create 2 buckets using the CLI with the following command:
 
 *Ireland Bucket* (choose a unique bucket name)
      
-     aws s3 mb s3://wildrydes-multiregion-firstname-lastname-eu-west-1 --region eu-west-1
+     aws s3 mb s3://multiregion-<firstnamelastname>-ireland --region eu-west-1
 
 *Singapore Bucket*
      
-     aws s3 mb s3://wildrydes-multiregion-firstname-lastname-ap-southeast-1 --region ap-southeast-1
+     aws s3 mb s3://multiregion-<firstnamelastname>-singapore --region ap-southeast-1
 
 ## 2. Package up the API code and push to S3
 
@@ -334,6 +334,10 @@ Because this is a [Serverless Application Model Template](https://docs.aws.amazo
 Go ahead and create two SAM deployment package in Ireland and Singapore regions respectively.
 You can do this using the following CLI command. Note that you must replace
 `[bucket-name]` in this command with the bucket you just created:
+
+Execute this command to enter the correct subdirectory:
+
+    cd /home/ec2-user/environment/MultiRegion-Serverless-Workshop/1_API
 
 *Ireland*
 
@@ -412,10 +416,22 @@ roles to allow our functions to speak to DynamoDB.
 Now, you can confirm that your API is working by copying your `API URL` and appending `/ticket`
 to it before navigating to it into your browser. It should return the following:
 
+For example: 
+
+    https://XXXXXX.execute-api.eu-west-1.amazonaws.com/prod/ticket
+    https://XXXXXX.execute-api.ap-southeast-1.amazonaws.com/prod/ticket
+
     {"Items":[],"Count":0,"ScannedCount":0}
 
 You can also run the health check by copying your `API URL` and appending `/health`
-to it before navigating to it into your browser. It should return the following:
+to it before navigating to it into your browser.
+
+For example:
+
+    https://XXXXX.execute-api.eu-west-1.amazonaws.com/prod/health
+    https://XXXXX.execute-api.ap-southeast-1.amazonaws.com/prod/health
+
+ It should return the following:
 
     {
         "region":"eu-west-1",
