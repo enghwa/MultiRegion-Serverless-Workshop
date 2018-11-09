@@ -56,7 +56,7 @@ Resources:
         IPV6Enabled: false
         Origins:
           - DomainName: !Sub '${S3BucketName}.s3.amazonaws.com'
-            Id: !Sub 's3-origin-${S3BucketName}'
+            # Id: !Sub 's3-origin-${S3BucketName}'
             OriginPath: ''
             S3OriginConfig:
               OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CfOriginAccessIdentity}'
