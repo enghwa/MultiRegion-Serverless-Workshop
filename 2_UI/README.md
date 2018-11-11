@@ -68,7 +68,7 @@ Click on **Add a New App** in the upper right corner:
 
 ![Add new FB app](images/facebook-add-app2.png)
 
-Name your App anything you would like, and then click **Create App ID**.
+Name your App anything you would like, and then click **Create App ID**. (Take note of the App ID)
 
 Once you have created your App, you will need to select *Settings* -> *Basic* from the left menu.
 
@@ -99,9 +99,9 @@ primary region (Ireland).
 
 1. Choose **Manage Identities Pools** and select the `SXRIdentityPool`.
 2. Click the **Edit Identity Pool** button in the top right
-3. Take note of the `Identity pool ID` noted at the top of this page
+3. Take note of the `Identity pool ID` noted at the top of this page (You can find this ID in the outputs of `ticket-service-ui` CloudFormation stack)
 4. Navigate to the **Authentication Providers** section.
-5. Select the **Facebook** tab, hit Unlock then specify your Facebook App ID
+5. Select the **Facebook** tab, hit Unlock then specify your Facebook App ID (15 digits number)
 6. Save Changes at the bottom of the page.
 
 ![Cognito IDP](images/cognito-idp.png)
@@ -115,15 +115,17 @@ App ID and Cognito Identity Pool ID so it can authenticate our users.
 All of these attributes must be configured in
 `2_UI/src/environments/environment.ts`. Open this file inside AWS Cloud9 and edit
 this file. Please be sure to address all of the parameters the file
-requires or you will fail.  If you used the console instructions to deploy Module 1,
-then you can obtain the API Gateway Endpoint using the same method you used when you
-tested at the end of the previous module.  Ensure you do *NOT* append `ticket` to
-the end of the URL but make sure you do have a `/` at the end like the comments in
-the file request.
+requires or you will fail.  
 
 You can obtain the Cognito Identity Pool ID from the *Outputs* of the CloudfFormation
-template you deployed in Module 2_UI.  Ensure that you copy the entire string,
+template (`ticket-service-ui` stack) you deployed above.  Ensure that you copy the entire string,
 including the AWS region (in this case, it should be `eu-west-1`)
+
+If you used the console instructions to deploy Module 1,
+then you can obtain the API Gateway Endpoint using the same method you used when you
+tested at the end of the previous module. If you used the CLI instructions, you can obtaing the API Gateway Endpoit from the *Outputs* of the CloudfFormation template (`wild-rydes-api` stack). Ensure you do *NOT* append `ticket` to
+the end of the URL but make sure you do have a `/` at the end like the comments in
+the file request.
 
 ![environment-ts](images/environment-ts.png)
 
