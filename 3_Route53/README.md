@@ -205,6 +205,8 @@ as the TTL.
 Now repeat in your second region to create a CNAME for the `singapore.`
 subdomain with the Target Domain Name for Singapore.
 
+![Regional subdomain records](images/route53-dns-recordsets.png)
+
 At this point you should now be able to visit your subdomain and see your API
 working. Navigate to the health check endpoint on your API using your custom
 domain in your web browser (e.g. `https://ireland.example.com/health`) and
@@ -294,15 +296,14 @@ below.
 ![Zone failover configuration](images/zone-configuration2.png)
 
 With the DNS configured, you should now be able to visit the `api.` prefix of
-your domain (remember to use HTTPS). Go to the `/health` path and notice how
-it always returns the Ireland region indicating that our Primary region is
-always being served.
+your domain (remember to use HTTPS). Go to the `/health` path and notice which 
+regions is served based on Weighted routing policy.
 
 ![Ireland health check response](images/ireland-health-response.png)
 
 ## 4. Update your UI with new API Gateway Endpoint
 
-Now that we have completed failover testing, you will need to change the API
+Now that we have completed active-active configuration, you will need to change the API
 endpoint in your *2_UI/src/environments/environments.ts* file to use our newly
 created DNS name for our API endpoint.
 
@@ -311,6 +312,8 @@ own domain) instead of the region specific name you used when setting up and
 testing the UI in the second module.
 
 **IMPORTANT** This new API Endpoint URL does NOT have `/prod/` at the end.
+
+![Cloud9 environment.ts](images/cloud9-update-environment2.png)
 
 Ensure you run `npm run build` from the *2_UI* directory, and then upload the */dist*
 contents to the S3 bucket using the same *aws s3* command you used in the second module. ie:
