@@ -326,4 +326,4 @@ Congratulations you have configured a multi-region API and set up a
 healthcheck-based Weighted routing policy using Route53. In the next module we will
 intentionally break the primary region (Ireland) and verify that the second region (Singapore) works.
 
-Module 4: [Test failover](../4_Testing/README.md)
+Module 4: [Test active-active](../4_Testing/README.md)
