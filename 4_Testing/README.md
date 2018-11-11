@@ -61,7 +61,7 @@ Don't forget to switch your API Gateway configuration back to the
 Congratulations! You have now setup and verified an API that fails over from
 one region to another automatically in the event of a disaster.
 
-To prevent further AWS charges, please clean-up the AWS resources created in this workshop by following the [steps here.](5_Cleanup/README.md)
+To prevent further AWS charges, please clean-up the AWS resources created in this workshop by following the [steps here.](../5_Cleanup/README.md)
 
 The application you have built includes many components that you would need to
 build your own Serverless applications in AWS including [AWS
