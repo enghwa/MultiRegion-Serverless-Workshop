@@ -322,9 +322,8 @@ contents to the S3 bucket using the same *aws s3* command you used in the second
 
 ## Completion
 
-Congratulations you have configured a multi-region API and set up a a
-healthcheck-based failover using Route53. In the next module we will
-intentionally break the primary region and verify that our failover to the
-second works.
+Congratulations you have configured a multi-region API and set up a
+healthcheck-based Weighted routing policy using Route53. In the next module we will
+intentionally break the primary region (Ireland) and verify that the second region (Singapore) works.
 
 Module 4: [Test failover](../4_Testing/README.md)
