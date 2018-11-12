@@ -6,7 +6,7 @@ experience to Wild Rydes users.
 
 The Wild Rydes team wants this application to meet the following requirements:
 
-1. Users must be able to submit and view support tickets
+1. Users must be able to submit and view tickets through the ticketing application
 2. Users must be able to log in with their Facebook user id
 3. The application should use an entirely serverless architecture (we don't
    have an operations team to manage our infrastructure!)
