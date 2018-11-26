@@ -68,7 +68,7 @@ Using the two regions above for this workshop is mandatory.  We will start with
 0. [Create AWS Cloud9 Environment](0_Cloud9/README.md)
 1. [Build an API layer](1_API/README.md)
 2. [Build a UI layer](2_UI/README.md)
-3. [Replicate to a second region](Route53/README.md)
+3. [Replicate to a second region](3_Route53/README.md)
 4. [Test failover](4_Testing/README.md)
 5. [Cleaning Up](5_Cleanup/README.md)
 
