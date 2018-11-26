@@ -127,7 +127,7 @@ Now, you can verify your source bucket objects in Ireland region are replicated 
 
 ### CloudFront with Multi-Region Amazon S3 Origins
 
-However, we need additional configuration on CloudFront as we used the CloudFront with S3 origin for HTTPS on your domain in the workshop. 
+However, we need additional configuration on CloudFront when we use the CloudFront with S3 origin for HTTPS on your domain. 
 
 In this module, we configure CloudFront to use [Lambda@Edge](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html) on each request to the origin. This Lambda function resolves a DNS record containing the origin that should be used. You can switch origins by using Amazon Route 53 features like health checks and weighted routing.
 
@@ -140,11 +140,15 @@ Features of Lambda@Edge include:
 
 We configure CloudFront to use the Lambda@Edge function on the origin request, so we can do something on each request that will go to Amazon S3. The origin request Lambda is triggered before CloudFront forwards the request to the origin. 
 
+Create a Lambda function using attached cloudfront-oriDnds.js. 
 
+//picture or command
 
 Then add a Origin Custom Header to the origin configuration in CloudFront. The value of this X-DNS-ORIGIN header will be used by our Lambda to know which record to resolve.
 
-When CloudFront gets a request from a client, and the requested object isn’t in the cache, it will trigger our Lambda function. The Lambda reads the value of the X-DNS-ORIGIN header that is part of this request and uses a DNS request to resolve the TXT record with the same name as the value of this header. After doing some validation of the TXT record (it should be in the format $bucketname.s3.$region.amazonaws.com), it will edit the request to point to the bucket in the TXT record. CloudFront gets the object from this bucket and returns it to the client.
+//picture or command
+
+When CloudFront gets a request from a client, and the requested object isn’t in the cache, it will trigger the Lambda function. The Lambda reads the value of the X-DNS-ORIGIN header that is part of this request and uses a DNS request to resolve the TXT record with the same name as the value of this header. After doing some validation of the TXT record (it should be in the format $bucketname.s3.$region.amazonaws.com), it will edit the request to point to the bucket in the TXT record. CloudFront gets the object from this bucket and returns it to the client.
 
 
 
