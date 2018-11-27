@@ -154,7 +154,7 @@ If you need to remove a file from CloudFront edge caches before it expires, you 
 
 To test the CloudFront Failover, you can delete the S3 bucket (or objects) in primary (Ireland) region. 
 
-*Note.* As you configured the S3 replication, you need to specify the Filter element in a replication configuration rule or delete with specifying an object version ID not to delete the objects in the destincation bucket (Singapore).
+*Note.* As you configured the S3 replication, you need to specify the Filter element in a replication configuration rule or delete with specifying an object version ID not to delete the objects in the destination bucket (Singapore).
 
 You can check the multi-region active-active ticketing system works perfectly though the primary region (Ireland) has an issue in S3 or API gateway. 
 
