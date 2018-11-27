@@ -1,10 +1,10 @@
 # S3 Replication and CloudFront with Multi-Region S3 Origins
 
-During the workshop, we focused on the apllication replication using API Gateway, Lambda and DynamoDB, but do not address replication of the website UI layer itself to a second region.
+During the workshop, we focused on the application replication using API Gateway, Lambda and DynamoDB, but do not address replication of the website UI layer itself to a second region.
 
-This module provides how you achieve the Web UI layer replication using **S3 Cross Region Replication** and **CloudFront with multi-region S3 Origins**. It is optional module that you can try if you have enough time in the workshop or explore later. 
+This module provides how you achieve the Web UI layer replication using **S3 Cross Region Replication** and **CloudFront Origin Failover**. It is optional module that you can try if you have enough time in the workshop or explore later. 
 
-//add architecture
+![Architecture diagram](images/architecture-2.png)
 
 As you've seen, still this application is not fully active-active multi-region solution as the AWS Cognito exists only in the primary region (Ireland). We will provide additional suggestion for the full stack after re:invent. 
 
@@ -55,7 +55,6 @@ Run the following command to create a role:
 	--assume-role-policy-document file://s3-role-trust-policy.json  \
 
 Attach a permissions policy to the role. Copy the following permissions policy and save it to a file named S3-role-permissions-policy.json in the current directory on your Cloud9 environment. This policy grants permissions for various Amazon S3 bucket and object actions. 
-
 
 	{
 		"Version":"2012-10-17",
@@ -123,32 +122,39 @@ Run the following command to add the replication configuration to your source bu
 	--replication-configuration file://replication.json \
 	--bucket source bucket name. ex) ticket-service-ui-websitebucket-firstname-lastname> \
 
+However, as S3 doesn't replicate objects retroactively, you need to update the Web UI bucket in source region (Ireland) to replicate objects to the destination bucket in Singapore.
+
+Build you app with by running `npm run build` and upload the UI to the S3 website bucket again to update objects for the replication:
+
+    aws s3 sync --delete dist/ s3://[bucket_name]
+
 Now, you can verify your source bucket objects in Ireland region are replicated to the destination bucket in Singapore region.
 
-### CloudFront with Multi-Region Amazon S3 Origins
+### CloudFront Origin Failover
 
-However, we need additional configuration on CloudFront when we use the CloudFront with S3 origin for HTTPS on your domain. 
+We also need additional configuration on CloudFront when we use the CloudFront with S3 origin for HTTPS on your domain. From Nov 20, you can enable Origin Failover for your CloudFront distributions to improve the availability of content delivered to your end users.
 
-In this module, we configure CloudFront to use [Lambda@Edge](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html) on each request to the origin. This Lambda function resolves a DNS record containing the origin that should be used. You can switch origins by using Amazon Route 53 features like health checks and weighted routing.
+With CloudFront’s Origin Failover capability, you can setup two origins for your distributions - primary (Ireland) and secondary (Singapore), such that your content is served from your secondary origin if CloudFront detects that your primary origin is unavailable. For example, you can have two Amazon S3 buckets that serve as your origin, that you independently upload your content to. If an object that CloudFront requests from your primary bucket is not present or if connection to your primary bucket times-out, CloudFront will request the object from your secondary bucket. So, you can configure CloudFront to trigger a failover in response to either HTTP 4xx or 5xx status codes.
 
-Features of Lambda@Edge include:
-- Quick to switch between origins (determined by DNS time to live)
-- Can be automated in Route 53
-- Support for sending only part of the traffic to another bucket
-- No need to edit CloudFront configuration
-- The same Lambda function can be used by multiple CloudFront distributions
+To get started, create the second origin with the same OAI (Origin Access Identity) of the primary origin. You can choose the S3 bucket in the second region (Singapore) that you created above for the Origin Domain Name.
 
-We configure CloudFront to use the Lambda@Edge function on the origin request, so we can do something on each request that will go to Amazon S3. The origin request Lambda is triggered before CloudFront forwards the request to the origin. 
+![CloudFront Second Origin](images/cloudfront-secondorigin.png)
 
-Create a Lambda function using attached cloudfront-oriDnds.js. 
+Next, create an origin group in which you designate a primary origin for CloudFront plus a second origin that CloudFront automatically switches to when the primary origin returns specific HTTP status code failure responses.
 
-//picture or command
+![CloudFront Origin Group](images/cloudfront-origingroup.png)
 
-Then add a Origin Custom Header to the origin configuration in CloudFront. The value of this X-DNS-ORIGIN header will be used by our Lambda to know which record to resolve.
+If you need to remove a file from CloudFront edge caches before it expires, you can do Invalidate the file from edge caches:
 
-//picture or command
+    aws cloudfront create-invalidation --distribution-id <value> --paths /
 
-When CloudFront gets a request from a client, and the requested object isn’t in the cache, it will trigger the Lambda function. The Lambda reads the value of the X-DNS-ORIGIN header that is part of this request and uses a DNS request to resolve the TXT record with the same name as the value of this header. After doing some validation of the TXT record (it should be in the format $bucketname.s3.$region.amazonaws.com), it will edit the request to point to the bucket in the TXT record. CloudFront gets the object from this bucket and returns it to the client.
+### Test CloudFront Failover
+
+To test the CloudFront Failover, you can delete the S3 bucket (or objects) in primary (Ireland) region. 
+
+*Note.* As you configured the S3 replication, you need to specify the Filter element in a replication configuration rule or delete with specifying an object version ID not to delete the objects in the destincation bucket (Singapore).
+
+You can check the multi-region active-active ticketing system works perfectly though the primary region (Ireland) has an issue in S3 or API gateway. 
 
 
 
