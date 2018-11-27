@@ -301,7 +301,7 @@ upload our code and create all of the necessary AWS resources for us rather than
 this manually using the console which would take much longer. 
 <!--We recommend deploying the
 primary region using the Console step-by-step instructions and then deploying the failover
-region using the CloudfFormation template. 
+region using the CloudFormation template. 
 --> 
 Feel free to open the template and take a look at the resources it is creating and how they are defined.
 
