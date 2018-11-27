@@ -16,13 +16,13 @@ We can replicate objects in S3 bucket to other regions for regionally distribute
 
 Cross-region replication (CRR) enables automatic, asynchronous copying of objects across buckets in different AWS Regions. To set up CRR when the source and destination buckets are owned by the same AWS account with the AWS CLI, you create source and destination buckets, enable versioning on the buckets, create an IAM role that gives Amazon S3 permission to replicate objects, and add the replication configuration to the source bucket. 
 
-1.Enable versioning on your source bucket in Ireland region: 
+1. Enable versioning on your source bucket in Ireland region: 
 
     aws s3api put-bucket-versioning \
 	--bucket <source bucket name. ex) ticket-service-ui-websitebucket-firstname-lastname> \
 	--versioning-configuration Status=Enabled \
 	
-2.Create a destination bucket and enable versioning on it. 
+2. Create a destination bucket and enable versioning on it. 
 
     aws s3api create-bucket \
 	--bucket <destination bucket name. ex) ticket-service-ui-websitebucket-singapore-firstname-lastname> \
@@ -33,7 +33,7 @@ Cross-region replication (CRR) enables automatic, asynchronous copying of object
 	--bucket <destination bucket name. ex) ticket-service-ui-websitebucket-singapore-firstname-lastname> \
 	--versioning-configuration Status=Enabled \
 
-3.Create an IAM role. You specify this role in the replication configuration that you add to the source bucket later. Amazon S3 assumes this role to replicate objects on your behalf. You create an IAM role and attach a permissions policy to the role.
+3. Create an IAM role. You specify this role in the replication configuration that you add to the source bucket later. Amazon S3 assumes this role to replicate objects on your behalf. You create an IAM role and attach a permissions policy to the role.
 
 Copy the following trust policy and save it to a to a file called S3-role-trust-policy.json in the current directory on your Cloud9 environment. This policy grants Amazon S3 service principal permissions to assume the role. 
 
