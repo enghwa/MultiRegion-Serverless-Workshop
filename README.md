@@ -87,9 +87,9 @@ account at a time. If you try sharing an account with another student, you'll
 run into naming conflicts for certain resources - we do not recommend this as
 there may be unpredictable results or difficult to identify configuration issues.
 
-### Domain Name (this is covered in Module 3 - do not purchase one yet)
+### Domain Name (this is covered in Module 3)
 
-You will also need to either purchase a domain, or repurpose an existing
+You will also need to either purchase a domain (Purchase it now before you start the lab as it takes a while), or repurpose an existing
 unused domain you already own.  You will need to delegate DNS to Route53 if
 the domain is not already acquired through AWS.  You may also need access to
 the email account associated with the domain name registration.
@@ -106,8 +106,12 @@ You can sign up using [this link](https://developers.facebook.com/docs/apps/regi
 Note that you will create the App ID later on in this guide using the
 website URL you will set up in Module 2.
 
+### Important Note
+If your laptop's security policy blocks Facebook or any 3rd party cookies (required by Cloud9), pair up with someone else who has a laptop which is not blocked.
+Please use only Chrome or Firefox browsers.
 
-### AWS Command Line Interface
+
+### AWS Cloud9 for AWS Command Line Interface
 
 To complete parts of this workshop you'll need the AWS Command Line Interface
 (CLI). The front end application is written in AngularJS and requires node and npm. To avoid spending time on configuring your laptop, we will use [AWS Cloud9](https://aws.amazon.com/cloud9/) as our IDE. It has AWS CLI preconfigured.
