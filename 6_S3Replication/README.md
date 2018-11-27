@@ -8,7 +8,7 @@ This module provides how you achieve the Web UI layer replication using **S3 Cro
 
 ![Architecture diagram](images/architecture-2.png)
 
-As you've seen, still this application is not fully active-active multi-region solution as the AWS Cognito exists only in the primary region (Ireland). We will provide additional suggestion for the full stack after re:invent. 
+This application is still not fully active-active multi-region solution as AWS Cognito exists only in the primary region (Ireland). We will continue to iterate and improve the full stack after Re:Invent. 
 
 ### S3 Cross-Region Replication (CRR)
 
