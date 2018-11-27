@@ -10,7 +10,7 @@ This module provides how you achieve the Web UI layer replication using **S3 Cro
 
 This application is still not fully active-active multi-region solution as AWS Cognito exists only in the primary region (Ireland). We will continue to iterate and improve the full stack after Re:Invent. 
 
-### S3 Cross-Region Replication (CRR)
+## S3 Cross-Region Replication (CRR)
 
 We can replicate objects in S3 bucket to other regions for regionally distributed computing, minimize latency for users in different geographic locations, or maintain copies of objects under different ownership. When using Amazon S3 to host static websites, a good way to serve data from regions is to use [Cross-Region Replication]](https://docs.aws.amazon.com/AmazonS3/latest/dev/crr.html).
 
@@ -132,7 +132,7 @@ Build you app with by running `npm run build` and upload the UI to the S3 websit
 
 Now, you can verify your source bucket objects in Ireland region are replicated to the destination bucket in Singapore region.
 
-### CloudFront Origin Failover
+## CloudFront Origin Failover
 
 We also need additional configuration on CloudFront when we use the CloudFront with S3 origin for HTTPS on your domain. From Nov 20, you can enable Origin Failover for your CloudFront distributions to improve the availability of content delivered to your end users.
 
@@ -150,7 +150,7 @@ If you need to remove a file from CloudFront edge caches before it expires, you 
 
     aws cloudfront create-invalidation --distribution-id <value> --paths /
 
-### Test CloudFront Failover
+## Test CloudFront Failover
 
 To test the CloudFront Failover, you can delete the S3 bucket (or objects) in primary (Ireland) region. 
 
