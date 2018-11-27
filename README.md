@@ -71,7 +71,7 @@ Using the two regions above for this workshop is mandatory.  We will start with
 3. [Replicate to a second region](3_Route53/README.md)
 4. [Test failover](4_Testing/README.md)
 5. [Cleaning Up](5_Cleanup/README.md)
-5. [Optional Lab - S3 Cross Region Replication and CloudFront Custom Domain](6_S3Replication/README.md)
+6. [Optional Lab - S3 Cross Region Replication and CloudFront Custom Domain](6_S3Replication/README.md)
 
 
 ## Prerequisites
