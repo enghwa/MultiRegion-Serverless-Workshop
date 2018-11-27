@@ -1,4 +1,4 @@
-# Building a UI layer
+# Building a UI layer 
 
 Now that we have a working API, let's deploy a UI that can expose this
 functionality to our users.  Note that we will only deploy this UI in our *Primary*
