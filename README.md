@@ -31,10 +31,12 @@ The application will utilize three layers:
 
 For the purposes of this workshop, our failover is focused on the path from
 our application (in this case, a web application) through API Gateway,
-Lambda and DynamoDB.  We do not address replication of the website UI layer
+Lambda and DynamoDB.  
+
+<!-- We do not address replication of the website UI layer
 itself to a second region, although this could be achieved using something
 like S3 [Cross Region
-Replication](http://docs.aws.amazon.com/AmazonS3/latest/dev/crr.html).
+Replication](http://docs.aws.amazon.com/AmazonS3/latest/dev/crr.html). -->
 
 The backend components will be replicated to the second region so that we can
 failover in the event of a disaster. In addition, all data in DynamoDB will be
