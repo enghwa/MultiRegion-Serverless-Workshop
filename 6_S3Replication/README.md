@@ -20,99 +20,75 @@ Cross-region replication (CRR) enables automatic, asynchronous copying of object
 
     aws s3api put-bucket-versioning \
 	--bucket <source bucket name. ex) ticket-service-ui-websitebucket-firstname-lastname> \
-	--versioning-configuration Status=Enabled \
+	--versioning-configuration Status=Enabled
 	
 2.Create a destination bucket and enable versioning on it. 
 
     aws s3api create-bucket \
 	--bucket <destination bucket name. ex) ticket-service-ui-websitebucket-singapore-firstname-lastname> \
 	--region ap-southeast-1 \
-	--create-bucket-configuration LocationConstraint=ap-southeast-1 \
+	--create-bucket-configuration LocationConstraint=ap-southeast-1
 
     aws s3api put-bucket-versioning \
 	--bucket <destination bucket name. ex) ticket-service-ui-websitebucket-singapore-firstname-lastname> \
-	--versioning-configuration Status=Enabled \
+	--versioning-configuration Status=Enabled 
 
 3.Create an IAM role. You specify this role in the replication configuration that you add to the source bucket later. Amazon S3 assumes this role to replicate objects on your behalf. You create an IAM role and attach a permissions policy to the role.
 
-Copy the following trust policy and save it to a to a file called S3-role-trust-policy.json in the current directory on your Cloud9 environment. This policy grants Amazon S3 service principal permissions to assume the role. 
+If you want to use the CLI to create a role in your Cloud9 enviroment, you need to use AWS managed temporary credentials. 
 
-	{
-		"Version":"2012-10-17",
-		"Statement":[
-			{
-    	    	"Effect":"Allow",
-    	     	"Principal":{
-    	        	"Service":"s3.amazonaws.com"
-       	  		},
-     	    	"Action":"sts:AssumeRole"
-    	  }
-		]
-	}
+Go to **IAM** and **Create role** with **S3** service. Then click the **Create Policy** with the following policy, **crrRolePolicy**: (Don't forget to change the Source and Destination bucket names)
 
-Run the following command to create a role:
+    {  
+      "Version":"2012-10-17",
+      "Statement":[
+            {
+              "Effect":"Allow",
+              "Action":[
+                  "s3:GetObjectVersionForReplication",
+                  "s3:GetObjectVersionAcl"
+              ],
+              "Resource":[
+                  "arn:aws:s3:::<source-bucket>/*"
+              ]
+            },
+            {
+          "Effect":"Allow",
+              "Action":[
+                  "s3:ListBucket",
+                  "s3:GetReplicationConfiguration"
+              ],
+              "Resource":[
+                  "arn:aws:s3:::<source-bucket>"
+              ]
+            },
+            {
+              "Effect":"Allow",
+              "Action":[
+                  "s3:ReplicateObject",
+                  "s3:ReplicateDelete",
+                  "s3:ReplicateTags",
+                  "s3:GetObjectVersionTagging"
+              ],
+              "Resource":"arn:aws:s3:::<destination-bucket>/*"
+            }
+          ]
+      }
 
-    aws iam create-role \
-	--role-name crrRole \
-	--assume-role-policy-document file://s3-role-trust-policy.json  \
+Attach a permissions policy to the role, **crrRole**. 
 
-Attach a permissions policy to the role. Copy the following permissions policy and save it to a file named S3-role-permissions-policy.json in the current directory on your Cloud9 environment. This policy grants permissions for various Amazon S3 bucket and object actions. 
-
-	{
-		"Version":"2012-10-17",
-		"Statement":[
-      		{
-         		"Effect":"Allow",
-         		"Action":[
-            		"s3:GetObjectVersionForReplication",
-            		"s3:GetObjectVersionAcl"
-         		],
-         		"Resource":[
-            		"arn:aws:s3:::source-bucket/*"
-         		]
-      		},
-      		{
-				"Effect":"Allow",
-         		"Action":[
-            		"s3:ListBucket",
-            		"s3:GetReplicationConfiguration"
-         		],
-         		"Resource":[
-            		"arn:aws:s3:::source-bucket"
-         		]
-      		},
-      		{
-         		"Effect":"Allow",
-         		"Action":[
-            		"s3:ReplicateObject",
-            		"s3:ReplicateDelete",
-            		"s3:ReplicateTags",
-            		"s3:GetObjectVersionTagging"
-         		],
-         		"Resource":"arn:aws:s3:::destination-bucket/*"
-      		}
-      	]
-    }
-
-Run the following command to create a policy and attach it to the role: 
-
-    aws iam put-role-policy \
-		--role-name crrRole \
-		--policy-document file://s3-role-permissions-policy.json \
-		--policy-name crrRolePolicy \
+![IAM Role for S3 replication](images/s3replication-createrole.png)
 
 Add replication configuration to the source bucket. Save the following JSON in a file called replication.json to the local directory on your Cloud9 environment. Update the JSON by providing values for the **destination-bucket** and **IAM-role-ARN** that you created above. Save the changes.
 
-	{
-		"Role": "IAM-role-ARN",
-		"Rules": [
+	 {
+		  "Role": "<IAM-role-ARN>",
+		  "Rules": [
     		{
+            "Prefix": "",
       			"Status": "Enabled",
-      			"Priority": "1",
-      			"DeleteMarkerReplication": { "Status": "Disabled" },
-      			"Filter" : { "Prefix": "Tax"},
       			"Destination": {
-        			"Bucket": "arn:aws:s3:::destination-bucket"
+        			"Bucket": "arn:aws:s3:::<destination-bucket>"
       			}
     		}
     	]
@@ -122,7 +98,7 @@ Run the following command to add the replication configuration to your source bu
 
     aws s3api put-bucket-replication \
 	--replication-configuration file://replication.json \
-	--bucket source bucket name. ex) ticket-service-ui-websitebucket-firstname-lastname> \
+	--bucket <source bucket name>
 
 However, as S3 doesn't replicate objects retroactively, you need to update the Web UI bucket in source region (Ireland) to replicate objects to the destination bucket in Singapore.
 
