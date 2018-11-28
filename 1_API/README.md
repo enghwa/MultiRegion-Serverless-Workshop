@@ -363,11 +363,12 @@ convenience.
     --s3-bucket [Singapore bucket_name_you_created_above]
 
 
-If all went well, you should get a success message and instructions to deploy your new template.
+<!-- If all went well, you should get a success message and instructions to deploy your new template. -->
+If all went well, there will be 2 cloudformation templates generated: `wild-rydes-api-output-ap-southeast-1.yaml` for Singapore and `wild-rydes-api-output.yaml` for Ireland. follow the instruction below to deploy the cloudformation template.
 
 ## 3. Deploy a stack of resources
 
-Next, we need to spin up the resources needed to run our code and expose it as an API.
+Let's spin up the resources needed to run our code and expose it as an API using the 2 cloudformation templates.
 
 #### High-level instructions
 
