@@ -19,7 +19,7 @@ because of the nature of DNS.
 recently. See http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 -->
 
-### 1.1 Purchase (or repurpose) your own domain
+### 1.1 Purchase (or repurpose) your own domain name
 
 In this step, you will provision your own domain name for this
 application. If you already have a domain name registered with Route53 and
@@ -37,7 +37,7 @@ If you do not want to purchase a domain name and you do not have a existing doma
 First, create a subdomain under this domain : `arc315.cf` in Route 53. For example : Navigate to `Route 53` console and create a new public Hosted Zone `myname.arc315.cf`.
 Next, mail the 4 `NS` record field to this email address `arc315lab@gmail.com`. Call out to the helper at the workshop and he will setup this subdomain for you.
 
-#### High-level instructions
+#### Purchase a Domain Name in Route53
 
 This step will let you purchase a new Domain name from Route 53. Take note that the AWS Credit code does not cover the cost of 1 year of the domain.
 
