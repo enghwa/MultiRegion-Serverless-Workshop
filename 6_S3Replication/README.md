@@ -85,7 +85,7 @@ Add replication configuration to the source bucket. Save the following JSON in a
 			"Role": "<IAM-role-ARN>",
 			"Rules": [
     		{
-				"Prefix": "",
+				    "Prefix": "",
       			"Status": "Enabled",
       			"Destination": {
         			"Bucket": "arn:aws:s3:::<destination-bucket>"
