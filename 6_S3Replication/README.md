@@ -81,19 +81,18 @@ Attach a permissions policy to the role, **crrRole**.
 
 Add replication configuration to the source bucket. Save the following JSON in a file called replication.json to the local directory on your Cloud9 environment. Update the JSON by providing values for the **destination-bucket** and **IAM-role-ARN** that you created above. Save the changes.
 
-	 {
-			"Role": "<IAM-role-ARN>",
-			"Rules": [
-    		{
-				    "Prefix": "",
-      			"Status": "Enabled",
-      			"Destination": {
-        			"Bucket": "arn:aws:s3:::<destination-bucket>"
-      			}
-    		}
-    	]
-    }
-
+    {  
+      "Role":"<IAM-role-ARN>",
+      "Rules":[
+            {
+              "Prefix":"",
+              "Status": "Enabled",
+              "Destination": {
+                "Bucket": "arn:aws:s3:::<destination-bucket>"
+              }
+            }
+          ]
+      }
 
 Run the following command to add the replication configuration to your source bucket. Be sure to provide source-bucket name. 
 
